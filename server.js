@@ -1,9 +1,10 @@
 const express = require('express');
 const OktaJwtVerifier = require('@okta/jwt-verifier');
 var cors = require('cors');
+var path = require('path');
 
 const oktaJwtVerifier = new OktaJwtVerifier({
-  issuer: 'https://Student-dev-817020/oauth2/default',
+  issuer: 'https://dev-817020.okta.com/oauth2/default',
   clientId: '0oadjrwyhSqaqWDTz356',
   assertClaims: {
     aud: 'api://default',
@@ -51,16 +52,20 @@ app.get('/secure', authenticationRequired, (req, res) => {
   res.json(req.jwt);
 });
 
+app.get("/", function(req, res) {
+  res.json(path.join(__dirname, "/home"));
+});
 /**
  * Another example route that requires a valid access token for authentication, and
  * print some messages for the user if they are authenticated
  */
 app.get('/api/messages', authenticationRequired, (req, res) => {
   res.json([{
-    message: 'Hello, word!'
+    message: 'Hello, world!'
   }]);
 });
 
-app.listen(3000, () => {
+var PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
   console.log('Serve Ready on port 3000');
 });

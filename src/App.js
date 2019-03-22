@@ -6,7 +6,7 @@ import Home from './components/pages/Home'
 import Data from './components/pages/Data'
 
 const config = {
-  issuer: 'https://Student-dev-817020.okta.com/oauth2/default',
+  issuer: 'https://dev-817020.okta.com/oauth2/default',
   redirect_uri: window.location.origin + '/implicit/callback',
   client_id: '0oadjrwyhSqaqWDTz356'
 };
@@ -20,8 +20,8 @@ class App extends Component {
                   redirect_uri={config.redirect_uri}
         >
           <Route path='/' exact={true} component={Home}/>
-          <Route path='/data' exact={true} component={Data}/>
           <Route path='/implicit/callback' component={ImplicitCallback}/>
+          <Route path='/data' exact={true} component={Data}/>
         </Security>
       </Router>
     );
