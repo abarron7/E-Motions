@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
+import { render } from 'react-dom';
+// Import routing components
+import {Router, Route} from 'react-router';
+
 
 export default withAuth(class Home extends Component {
   constructor(props) {

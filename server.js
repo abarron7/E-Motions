@@ -2,6 +2,8 @@ const express = require('express');
 const OktaJwtVerifier = require('@okta/jwt-verifier');
 var cors = require('cors');
 var path = require('path');
+// CHECK THE EXAMPLES DOWNLOADED FROM SITE FOR HOW THEY SET UP ROUTING.
+
 
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: 'https://dev-817020.okta.com/oauth2/default',
@@ -53,7 +55,7 @@ app.get('/secure', authenticationRequired, (req, res) => {
 });
 
 app.get("/", function(req, res) {
-  res.json(path.join(__dirname, "/home"));
+  res.json(path.join(__dirname, "./src/components/pages/Home.js"));
 });
 /**
  * Another example route that requires a valid access token for authentication, and

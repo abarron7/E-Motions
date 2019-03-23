@@ -3,7 +3,7 @@ import './App.css';
 import { Security, ImplicitCallback } from '@okta/okta-react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './components/pages/Home'
-import Data from './components/pages/Data'
+import Data from './components/pages/Profile'
 
 const config = {
   issuer: 'https://dev-817020.okta.com/oauth2/default',
