@@ -55,16 +55,7 @@ app.get('/secure', authenticationRequired, (req, res) => {
 });
 
 app.get("/", function(req, res) {
-  res.json(path.join(__dirname, "./src/components/pages/Home.js"));
-});
-/**
- * Another example route that requires a valid access token for authentication, and
- * print some messages for the user if they are authenticated
- */
-app.get('/api/messages', authenticationRequired, (req, res) => {
-  res.json([{
-    message: 'Hello, world!'
-  }]);
+  res.json(path.join(__dirname, "./src/pages/Home.jsx"));
 });
 
 var PORT = process.env.PORT || 3000;

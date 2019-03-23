@@ -15,6 +15,7 @@
     "mongoose": "^5.3.16",
     "nodemon": "^1.18.9",
     "path": "^0.12.7",
+    "popper.js": "^1.14.7",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^4.2.2",
@@ -26,7 +27,18 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "banners": "node tools/maintain-banners.js {okta-hosted-login,custom-login,tools,scripts}/{*js,src/**/*{js,jsx,css}}",
+    "okta-hosted-login-server": "npm start --prefix okta-hosted-login/",
+    "test:okta-hosted-login": "export TEST_TYPE=implicit || setx TEST_TYPE \"implicit\" && protractor okta-oidc-tck/e2e-tests/okta-hosted-login/conf.js",
+    "custom-login-server": "npm start --prefix custom-login/",
+    "test:custom-login": "export TEST_TYPE=implicit || setx TEST_TYPE \"implicit\" && protractor okta-oidc-tck/e2e-tests/custom-login/conf.js",
+    "resource-server": "node samples-nodejs-express-4/resource-server/server.js",
+    "test:e2e": "npm run test:okta-hosted-login && npm run test:custom-login",
+    "pretest": "npm run webdriver-update && node scripts/setup-env.js",
+    "pretest-legacy": "npm run webdriver-update-legacy && node scripts/setup-env.js",
+    "webdriver-update": "webdriver-manager update --gecko false",
+    "webdriver-update-legacy": "webdriver-manager update --versions.chrome 2.45 --gecko false"
   },
   "eslintConfig": {
     "extends": "react-app"
