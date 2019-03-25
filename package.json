@@ -23,7 +23,6 @@
     "start": "cross-env PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "test": "echo 'Tests not yet implemented' && exit 1",
-    "eject": "react-scripts eject",
-    "postinstall": "node post-install.js"
+    "eject": "react-scripts eject"
   }
 }
