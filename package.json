@@ -17,7 +17,7 @@
     "path": "^0.12.7",
     "nodemon": "^1.18.9",
     "jquery": "^3.3.1",
-    "express": "^4.16.3",
+    "express": "^4.16.3"
   },
   "scripts": {
     "start": "cross-env PORT=8080 react-scripts start",
