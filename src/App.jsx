@@ -19,6 +19,7 @@ import Home from './pages/Home';
 import CustomLoginComponent from './pages/Login';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
+import Messages from './pages/Messages';
 
 function customAuthHandler({ history }) {
   // Redirect to the /login page that has a CustomLoginComponent
@@ -41,6 +42,7 @@ class App extends Component {
               <Route path="/" exact component={Home} />
               <Route path="/implicit/callback" component={ImplicitCallback} />
               <Route path="/login" component={CustomLoginComponent} />
+              <SecureRoute path="/messages" component={Messages} />
               <SecureRoute path="/profile" component={Profile} />
             </Container>
           </Security>
