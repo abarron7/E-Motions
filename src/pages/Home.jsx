@@ -14,7 +14,7 @@ import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { Button, Header } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
-
+var $ = require('jquery');
 export default withAuth(class Home extends Component {
   constructor(props) {
     super(props);

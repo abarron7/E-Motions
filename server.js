@@ -2,6 +2,7 @@ const express = require('express');
 const OktaJwtVerifier = require('@okta/jwt-verifier');
 var cors = require('cors');
 var path = require('path');
+var $ = require('jquery');
 // CHECK THE EXAMPLES DOWNLOADED FROM SITE FOR HOW THEY SET UP ROUTING.
 
 
