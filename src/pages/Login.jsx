@@ -14,8 +14,8 @@ import React, { Component } from 'react';
 import * as OktaSignIn from '@okta/okta-signin-widget';
 import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css';
 import '@okta/okta-signin-widget/dist/css/okta-theme.css';
-
 import config from '../.samples.config';
+var $ = require('jquery');
 
 export default class LoginPage extends Component {
   constructor(props) {
