@@ -16,6 +16,7 @@ import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import { Container } from 'semantic-ui-react';
 import config from './.samples.config';
 import Home from './pages/Home';
+import Test from './pages/Test';
 import CustomLoginComponent from './pages/Login';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
@@ -42,6 +43,7 @@ class App extends Component {
               <Route path="/" exact component={Home} />
               <Route path="/implicit/callback" component={ImplicitCallback} />
               <Route path="/login" component={CustomLoginComponent} />
+              <Route path="/test" exact component={Test} />
               <SecureRoute path="/messages" component={Messages} />
               <SecureRoute path="/profile" component={Profile} />
             </Container>
