@@ -18,10 +18,14 @@ var MemesSchema = new Schema({
         type: String,
         required: true
     },
-    title: {
-        type: String,
-        required: true
+    reviewed: {
+        type: Boolean,
+        default: false
     },
+    liked: {
+        type: Boolean,
+        default: false
+    }
 });
 
 // Create a mongoose model using the Schema
