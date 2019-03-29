@@ -1,0 +1,35 @@
+{
+  "name": "mern",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.7"
+  },
+  "dependencies": {
+    "@okta/jwt-verifier": "0.0.14",
+    "@okta/okta-react": "^1.0.3",
+    "@okta/okta-signin-widget": "^2.5.0",
+    "@sentry/browser": "^4.6.4",
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2",
+    "cors": "^2.8.5",
+    "cross-env": "^5.2.0",
+    "express": "^4.16.3",
+    "fs": "0.0.1-security",
+    "if-env": "^1.0.4",
+    "jquery": "^3.3.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.3.16",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "yarn": "^1.13.0"
+  }
+}

@@ -14,14 +14,16 @@ import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { Button, Header } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
+import API from "../utils/API";
 var $ = require('jquery');
 
-export default withAuth(class Home extends Component {
+export default withAuth(class Memes extends Component {
   constructor(props) {
     super(props);
     this.state = { authenticated: null, userinfo: null };
     this.checkAuthentication = checkAuthentication.bind(this);
     this.login = this.login.bind(this);
+
   }
 
   async componentDidMount() {
