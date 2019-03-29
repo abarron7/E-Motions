@@ -8,7 +8,6 @@
     "nodemon": "^1.18.9"
   },
   "dependencies": {
-    "@okta/jwt-verifier": "0.0.14",
     "@okta/okta-react": "^1.0.3",
     "@okta/okta-signin-widget": "^2.5.0",
     "@sentry/browser": "^4.6.6",
