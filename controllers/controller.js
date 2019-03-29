@@ -136,31 +136,22 @@ const db = require("../models");
 
 // Get all saved events from DB
 router.get("/", function (req, res) {
-    db.Events.find({}, null, {
-            sort: {
-                "momentjsstamp": 1
-            }
+    db.Memes.find({}, null, {
+            // sort: {
+            //     "momentjsstamp": 1
+            // }
         })
-        .then(function (eventsData) {
-            // Save all data into handlebars object
-            var hbsObject = {
-                events: eventsData
-            };
-            // console.log(hbsObject);
-            res.render("index", hbsObject);
+        .then(function (memesData) {
+            // Save data
+            var memesData = memesData;
         })
         .catch(function (error) {
             res.json(error);
         });
 });
 
-// Get help
-router.get("/help", function (req, res) {
-    res.render("help");
-});
-
-// Save an event as going
-router.put("/saved-going/:id", function (req, res) {
+// Save a meme
+router.put("/saved-liked/:id", function (req, res) {
     db.Events.find({
             _id: req.params.id
         })
@@ -254,7 +245,7 @@ router.put("/saved-interested/:id", function (req, res) {
 
 // Save an event as not interested (i.e. rsvp is blank)
 router.put("/saved-dismiss/:id", function (req, res) {
-    db.Events.find({
+    db.Memes.find({
             _id: req.params.id
         })
         .then(function (eventData) {
@@ -300,21 +291,14 @@ router.put("/saved-dismiss/:id", function (req, res) {
 
 // Reset
 router.delete("/deleteall", function (req, res, next) {
-    db.Events.remove({}, function (err) {
+    db.Memes.remove({}, function (err) {
             if (err) {
                 console.log(err);
             } else {
-                console.log("Delete Function - Event history reset");
+                console.log("Delete Function - Memes deleted");
             }
         })
         .then(function () {
-            db.Notes.remove({}, function (err) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Delete Function - rsvp history reset");
-                }
-            })
         })
 });
 
