@@ -19,8 +19,16 @@ const fs = require("fs");
 // MODELS
 const db = require("../models");
 
-    // AREA 51 - TESTING IN PROGRESS
-    // AEG Events Group
+
+///                            ///
+///           ROUTES           ///
+///                            ///
+
+// ** ROUTE FOR SCRAPING ** //
+router.get('/scrape', function (req, res) {
+
+    console.log("~~~Scrape route activated")
+
     var promises = [
         axios.get("https://wholesome-memes-only.tumblr.com/")
         // axios.get("https://www.reddit.com/r/wholesomememes/")
@@ -31,6 +39,14 @@ const db = require("../models");
             scrapedResponses.forEach(function(values) {
                 // Load the response into cheerio and store it as a short-hand selector
                 var $ = cheerio.load(values.data);
+
+                console.log("VALUES");
+                console.log("VALUES");
+                console.log("VALUES");
+                console.log(values.data);
+                console.log("VALUES");
+                console.log("VALUES");
+                console.log("VALUES");
 
                 fs.writeFile("text.txt", "", function(err) {
                     if (err) {
@@ -48,18 +64,18 @@ const db = require("../models");
 
                     // Pull the desired information
                     // Image info
-                    result.image = $(this).find("a").children("img").attr("src");
+                    result.imageURL = $(this).find("a").children("img").attr("src");
 
-                    fs.appendFile("text.txt", result.image + "\n\n", function(err) {
+                    fs.appendFile("text.txt", result.imageURL + "\n\n", function(err) {
                         if (err) {
                             return console.log(err);
                         }
                         console.log("FS line added!");
                     });  
 
-                });
+
                 
-                console.log("done");
+
                 
 
                 //     // Date
@@ -87,25 +103,23 @@ const db = require("../models");
                 //     }
                 //     result.supportact = supportact;
 
-                //     // Check if event already exists, if not then create new document
-                //     db.Events
-                //         .findOne({$and: [
-                //             {artist: result.artist},
-                //             {momentjsstamp: result.momentjsstamp},
-                //             {eventlink: result.eventlink}
-                //         ]}, {limit: 1})
-                //         .then(function (foundID) {
-                //             if (foundID) {
-                //                 console.log("Event already exists")
-                //             } else {
-                //                 console.log("Event doesn't exist yet - adding!")
-                //                 // Create result in database
-                //                 db.Events.create(result)
-                //                     .then(function () {})
-                //                     .catch(function (error) {
-                //                         return res.json(error);
-                //                     });
-                //             }
+                    // Check if meme already exists, if not then create new document
+                    db.Memes
+                        .findOne({$and: [
+                            {imageURL: result.imageURL}
+                        ]}, {limit: 1})
+                        .then(function (foundID) {
+                            if (foundID) {
+                                console.log("Meme already exists")
+                            } else {
+                                console.log("Meme doesn't exist yet - adding!")
+                                // Create result in database
+                                db.Memes.create(result)
+                                    .then(function () {})
+                                    .catch(function (error) {
+                                        return res.json(error);
+                                    });
+                            }
 
                 //         // Delete any events that are dated before today (0) or three days ahead (3)
                 //         var midnightTonight = moment().startOf("day").add(0, "days").format();
@@ -125,6 +139,11 @@ const db = require("../models");
                 //     });
                 // });
 
+                
+        });
+        
+    });
+        });
 
     });
 
@@ -134,8 +153,8 @@ const db = require("../models");
 
 // ** ROUTES TO SEND TO SERVER.JS ** //
 
-// Get all saved events from DB
-router.get("/", function (req, res) {
+// Get all memes from DB
+router.get('/findall', function (req, res) {
     db.Memes.find({}, null, {
             // sort: {
             //     "momentjsstamp": 1
@@ -151,20 +170,17 @@ router.get("/", function (req, res) {
 });
 
 // Save a meme
-router.put("/saved-liked/:id", function (req, res) {
-    db.Events.find({
+router.put('/saved-liked/:id', function (req, res) {
+    db.Memes.find({
             _id: req.params.id
         })
-        .then(function (eventData) {
-            if (eventData[0].rsvp.going == false) {
-                db.Events.update({
+        .then(function (memeData) {
+            if (memeData[0].liked == false) {
+                db.Memes.update({
                         _id: req.params.id
                     }, {
                         $set: {
-                            saved: true,
-                            "rsvp.dismissed": false,
-                            "rsvp.interested": false,
-                            "rsvp.going": true
+                            liked: true
                         }
                     })
                     .then(function (result) {
