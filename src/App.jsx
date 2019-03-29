@@ -16,40 +16,27 @@ import { Security, SecureRoute, ImplicitCallback } from '@okta/okta-react';
 import { Container } from 'semantic-ui-react';
 import config from './.samples.config';
 import Home from './pages/Home';
-import Test from './pages/Test';
-import CustomLoginComponent from './pages/Login';
 import Navbar from './components/Navbar';
 import Profile from './pages/Profile';
-import Messages from './pages/Messages';
-
-function customAuthHandler({ history }) {
-  // Redirect to the /login page that has a CustomLoginComponent
-  history.push('/login');
-}
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <Router>
-          <Security
-            issuer={config.oidc.issuer}
-            client_id={config.oidc.clientId}
-            redirect_uri={config.oidc.redirectUri}
-            onAuthRequired={customAuthHandler}
-          >
-            <Navbar />
-            <Container text style={{ marginTop: '7em' }}>
-              <Route path="/" exact component={Home} />
-              <Route path="/implicit/callback" component={ImplicitCallback} />
-              <Route path="/login" component={CustomLoginComponent} />
-              <Route path="/test" exact component={Test} />
-              <SecureRoute path="/messages" component={Messages} />
-              <SecureRoute path="/profile" component={Profile} />
-            </Container>
-          </Security>
-        </Router>
-      </div>
+      <Router>
+       <Security
+         issuer={config.oidc.issuer}
+          client_id={config.oidc.clientId}
+          redirect_uri={config.oidc.redirectUri}
+        >
+         <Navbar />
+          <Container text style={{ marginTop: '7em' }}>
+            <Route path="/" exact component={Home} />
+            <Route path="/implicit/callback" component={ImplicitCallback} />
+            <SecureRoute path="/profile" component={Profile} />
+          </Container>
+        </Security>
+      </Router>
+
     );
   }
 }
