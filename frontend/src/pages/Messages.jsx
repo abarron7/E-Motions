@@ -13,10 +13,11 @@
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { Header, Icon, Message, Table } from 'semantic-ui-react';
+import API from "../utils/API";
 
 import config from '../.samples.config';
 
-export default withAuth(class Profile extends Component {
+export default withAuth(class Messages extends Component {
   constructor(props) {
     super(props);
     this.state = { messages: null, failed: null };

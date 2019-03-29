@@ -13,6 +13,7 @@
 import React, { Component } from 'react';
 import { withAuth } from '@okta/okta-react';
 import { Header, Icon, Table } from 'semantic-ui-react';
+import API from "../utils/API";
 
 import { checkAuthentication } from '../helpers';
 

@@ -3,36 +3,25 @@
                 ///                            ///
 
 const express = require('express');
+const logger = require("morgan");
 
-// 
-var bodyParser = require("body-parser");
-var logger = require("morgan");
+const mongoose = require("mongoose");
 
-// MONGOOSE
-var mongoose = require("mongoose");
+const cors = require('cors');
+const path = require('path');
+
+const routes = require("./routes");
+const PORT = process.env.PORT || 5000;
 
 const OktaJwtVerifier = require('@okta/jwt-verifier');
-var cors = require('cors');
-var path = require('path');
 var $ = require('jquery');
-// CHECK THE EXAMPLES DOWNLOADED FROM SITE FOR HOW THEY SET UP ROUTING.
 
 
                 ///                            ///
                 ///           LOGIC            ///
                 ///                            ///
 
-      //////////////
-      // MONGOOSE //
-      
-// SETUP MONGOOSE DATABASE
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoMemes";
 
-// Set mongoose to leverage built in JavaScript ES6 Promises
-mongoose.Promise = Promise;
-
-// Connect to the Mongo DB
-mongoose.connect(MONGODB_URI);
 
       //////////
       // OKTA //
@@ -46,8 +35,8 @@ const oktaJwtVerifier = new OktaJwtVerifier({
 });
 
 const url = require('url');
-const sampleConfig = require('../.samples.config.json');
-const SampleWebServer = require('../common/sample-web-server');
+// const sampleConfig = require('../.samples.config.json');
+// const SampleWebServer = require('../common/sample-web-server');
 
 const oidcMiddlewareConfig = {
   routes: {
@@ -67,7 +56,7 @@ const oidcMiddlewareConfig = {
 /**
  * Bootstrap the sample web server with the additional configuration for the custom login page
  */
-new SampleWebServer(sampleConfig.webServer, oidcMiddlewareConfig, 'custom-login-home');
+// new SampleWebServer(sampleConfig.webServer, oidcMiddlewareConfig, 'custom-login-home');
 
 /**
  * A simple middleware that asserts valid access tokens and sends 401 responses
@@ -108,12 +97,33 @@ app.use(cors());
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 
-// Use body-parser for handling form submissions
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-// parse application/json
-app.use(bodyParser.json());
+// Configure body parsing for AJAX requests
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static('public'));
+
+// Serve up static assets
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../frontend/build/"));
+}
+
+
+      //////////////
+      // MONGOOSE //
+
+// Set mongoose to leverage built in JavaScript ES6 Promises
+mongoose.Promise = Promise;
+
+// Connect to the Mongo DB
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/mongoMemes",
+  {useNewUrlParser: true}
+);
+
+
 
 
 /**
@@ -126,16 +136,19 @@ app.get('/secure', authenticationRequired, (req, res) => {
 });
 
 app.get('/', function(req, res) {
-  res.json(path.join(__dirname, "./src/pages/Home.jsx"));
+  res.json(path.join(__dirname, "../frontend/src/pages/Home.jsx"));
 });
 
-// Import and use routes.
-var scraperRoutes = require("./controllers/controller.js");
-var savedRoutes = require("./controllers/saved-memes.js");
-app.use(scraperRoutes, savedRoutes);
+// Add routes, API
+app.use(routes);
+
+app.get('/greeting', (req, res) => {
+  const name = req.query.name || 'World';
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
+});
 
 // Start the server
-var PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log("App running on port https://localhost:" + PORT);
 });
