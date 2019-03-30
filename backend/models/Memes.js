@@ -7,7 +7,6 @@ var mongoose = require("mongoose");
 // Reference the Schema constructor
 var Schema = mongoose.Schema;
 
-
                 ///                            ///
                 ///           SCHEMA           ///
                 ///                            ///
