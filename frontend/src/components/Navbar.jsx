@@ -48,9 +48,9 @@ export default withAuth(class Navbar extends Component {
             <Menu.Item as="a" header href="/">
               <Image size="mini" src="/react.svg" />
               &nbsp;
-              Okta-React Sample Project (Home Page)
+              Feels... An Okta-React, Feel-Good Project!
             </Menu.Item>
-            {this.state.authenticated === true && <Menu.Item id="messages-button" as="a" href="/messages"><Icon name="mail outline" />Your Memes</Menu.Item>}
+            {this.state.authenticated === true && <Menu.Item id="saved-button" as="a" href="/saved"><Icon name="mail outline" />Saved</Menu.Item>}
             {this.state.authenticated === true && <Menu.Item id="memes-button" as="a" href="/memes">New Memes</Menu.Item>}
             {this.state.authenticated === true && <Menu.Item id="profile-button" as="a" href="/profile">Profile</Menu.Item>}
             {this.state.authenticated === true && <Menu.Item id="logout-button" as="a" onClick={this.logout}>Logout</Menu.Item>}

@@ -3,14 +3,14 @@ import "./style.css";
 import { ListItem } from "../List";
 
 const Meme = ({
-  imageURL
+  src
 }) => {
   
 
   return (
     <ListItem>
       <div className="media-snippet">
-        <img className="image is-128xauto" src={imageURL} alt="meme" />
+        <img className="imageMeme" src={src} alt="meme" />
       </div>
     </ListItem>
   );

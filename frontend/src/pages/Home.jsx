@@ -1,3 +1,6 @@
+// Contains the React JSX Home page
+// Contains the functions and components/elements required for this page
+
 /*
  * Copyright (c) 2018, Okta, Inc. and/or its affiliates. All rights reserved.
  * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
@@ -54,7 +57,7 @@ export default withAuth(class Memes extends Component {
       <div>
         {this.state.authenticated !== null &&
         <div>
-          <Header as="h1">Implicit Flow w/ Okta Hosted Login Page</Header>
+          <Header as="h1">Welcome to Feels!</Header>
           {this.state.authenticated &&
             <div>
               <p>Welcome back, {this.state.userinfo.name}!</p>
@@ -73,16 +76,10 @@ export default withAuth(class Memes extends Component {
           }
           {!this.state.authenticated &&
             <div>
-              <p>If you&lsquo;re viewing this page then you have successfully started this React application.</p>
+              <p>Welcome to Feels.  A place to get your fix of wholesome memes.</p>
+              <p>But only after you login.</p>
               <p>
-                <span>This example shows you how to use the </span>
-                <a href="https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react">Okta React Library</a>
-                <span> to add the </span>
-                <a href="https://developer.okta.com/authentication-guide/implementing-authentication/implicit">Implicit Flow</a>
-                <span> to your application.</span>
-              </p>
-              <p>
-                When you click the login button below, you will be redirected to the login page on your Okta org.
+                When you click the login button below, you will be redirected to the login page, brought to you by Okta org.
                 After you authenticate, you will be returned to this application with an ID token and access token.  These tokens will be stored in local storage and can be retrieved at a later time.
               </p>
               <Button id="login-button" primary onClick={this.login}>Login</Button>

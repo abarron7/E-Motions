@@ -1,3 +1,5 @@
+// Assists by caching data and improving load times
+// Provides some offline viewing benefits
 
 /* eslint-disable */
 // In production, we register a service worker to serve assets from local cache.

@@ -1,3 +1,6 @@
+// Renders the App to the public\index.html file
+// Also calls the registerServiceWorker() function, which improves load times and offline caching
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';

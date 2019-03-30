@@ -1,7 +1,16 @@
+// Directs all API routes
+
+////////////////////////////////////////
+///           DEPENDENCIES           ///
+
 const path = require("path");
 const router = require("express").Router();
 const dbRoutes = require("./dbRoutes");
 const scrapeRoutes = require("./scrapeRoutes");
+
+
+////////////////////////////////////////
+///              ROUTES              ///
 
 // Memes routes match /api/memes
 router.use("/memes", dbRoutes);

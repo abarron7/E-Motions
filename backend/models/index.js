@@ -1,4 +1,4 @@
-// Export all the models
+// Export all the DB models
 module.exports = {
     Memes: require("./Memes")
 }
