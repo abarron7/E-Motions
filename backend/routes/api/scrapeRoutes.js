@@ -12,6 +12,6 @@ const scrapeController = require("../../controllers/scrapeController");
 
 // Matches with "/api/scrape"
 router.route("/")
-    .get(scrapeController.findAll);
+    .get(scrapeController.scrapeAll);
 
 module.exports = router;

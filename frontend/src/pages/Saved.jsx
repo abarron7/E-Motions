@@ -4,17 +4,20 @@
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { Button, Header, Icon, Message, Table } from 'semantic-ui-react';
+import { checkAuthentication } from '../helpers';
 import API from "../utils/API";
 
 // Import components
 import { List } from "../components/List/index";
-import Meme from "../components/Meme/index";
+// import Meme from "../components/Meme/index";
 
 import config from '../.samples.config';
 
-export default withAuth(class Messages extends Component {
+export default withAuth(class Saved extends Component {
   constructor(props) {
     super(props);
+    this.checkAuthentication = checkAuthentication.bind(this);
+
     this.state = { messages: null, failed: null };
     this.state = {
       authenticated: null,
@@ -25,18 +28,23 @@ export default withAuth(class Messages extends Component {
     };
   }
 
-  componentDidMount() {
-    this.getMessages();
-    API.scrapeMemes()
-    .then(res => {
-      this.setState({
-        savedMemes: res.data,
-      });
-      console.log("res");
-      console.log(res);
+  async componentDidMount() {
+    await this.checkAuthentication();
+    this.applyClaims();
+    // this.getMessages();
+    console.log(this.state.userinfo);
+  }
+  
+  async componentDidUpdate() {
+    await this.checkAuthentication();
+    this.applyClaims();
+  }
+
+  async applyClaims() {
+    if (this.state.userinfo && !this.state.claims) {
+      const claims = Object.entries(this.state.userinfo);
+      this.setState({ claims, ready: true });
     }
-    )
-    .catch(err => console.log(err));
   }
 
   async getMessages() {
@@ -97,9 +105,6 @@ export default withAuth(class Messages extends Component {
                   <List>
                     {this.state.savedMemes.map(meme => (
                       <React.Fragment>
-                        <Meme
-                          src={meme}
-                        />
                         <div class="button-rate button-rate-up">YES</div>
                         <div class="button-rate button-rate-down">NO</div>
                       </React.Fragment>
