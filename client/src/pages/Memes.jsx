@@ -1,6 +1,17 @@
 // Contains the React JSX New Memes page
 // Contains the functions and components/elements required for this page
 
+/*
+ * Copyright (c) 2018, Okta, Inc. and/or its affiliates. All rights reserved.
+ * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
+ *
+ * You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *
+ * See the License for the specific language governing permissions and limitations under the License.
+ */
 
 // Okta
 import { withAuth } from '@okta/okta-react';
@@ -32,7 +43,11 @@ export default withAuth(class Memes extends Component {
       authenticated: null,
       userinfo: null,
       ready: false,
-      scrapedMemes: []
+      scrapedMemes: [],
+      currentMeme: {
+        index: null,
+        url: 'https://cdn1.iconfinder.com/data/icons/dinosaur/154/small-dino-dinosaur-dragon-walk-512.png'
+      }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     // testing routes END
@@ -45,7 +60,6 @@ export default withAuth(class Memes extends Component {
   // testing routes END
 
   async componentDidMount() {
-
     await this.checkAuthentication();
     this.applyClaims();
     this.scrapeMemes();
@@ -54,17 +68,8 @@ export default withAuth(class Memes extends Component {
 
   async componentDidUpdate() {
     await this.checkAuthentication();
-    this.applyClaims();
-
+    this.applyClaims();    
   }
-  // Use this to access the unique id from the above
-  // {this.state.claims.map((claimEntry) => {
-  //   const claimName = claimEntry[0];
-  //   const claimValue = claimEntry[1];
-  //   const claimId = `claim-${claimName}`;
-  //   console.log(claimEntry)
-  //   return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
-  // })}
 
   async login() {
     this.props.auth.login('/');
@@ -87,6 +92,23 @@ export default withAuth(class Memes extends Component {
       // console.log(res);
     })
     .catch(err => console.log(err));
+  };
+
+  getCurrentMeme = () => {
+    var randomIndex = Math.floor(Math.random() * (this.state.scrapedMemes.length + 1));
+    this.state.scrapedMemes.map((selectedMemeURL, index) => {
+      if (index == randomIndex) {
+        console.log("index " + randomIndex + " is for " + selectedMemeURL);
+        this.state.scrapedMemes.splice(index, 1);
+        this.setState({
+          currentMeme: {
+            index: index,
+            url: selectedMemeURL
+          }
+        })
+        return;
+      }
+    })
   };
 
   saveMeme = () => {
@@ -122,8 +144,17 @@ export default withAuth(class Memes extends Component {
               <div>
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.scrapedMemes.length}</p> */}
+                {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
+                
+                
+                  {this.getCurrentMeme()}
+                  <img src={this.state.currentMeme.url}></img>
+                  <p>Current meme is {this.state.currentMeme.index}</p>
+                
+
                 <p>The array is currently {this.state.scrapedMemes.length} memes long</p>
-                {this.state.scrapedMemes.length ? (
+                
+                {/* {this.state.scrapedMemes.length ? (
                   <List>
                     {this.state.scrapedMemes.map(meme => (
                       <React.Fragment>
@@ -141,7 +172,8 @@ export default withAuth(class Memes extends Component {
                       <div></div>
                     </h4>
                   </div>
-                )}
+                )} */}
+
               </div>
             }
             {!this.state.authenticated &&
