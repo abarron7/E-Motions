@@ -21,8 +21,8 @@ const db = require("../models");
 // Exports all scraper methods
 module.exports = {
 
-  // Scrape all methods
-  findAll: function(req, res) {
+  // Scrape all method
+  scrapeAll: function(req, res) {
 
     var urlInstagram = "https://www.instagram.com/wholesomememes/";
     var urlTumblr = "https://wholesome-memes-only.tumblr.com/";
@@ -37,13 +37,13 @@ module.exports = {
     // WORKS
         axios.get(urlTumblr),
     // WORKS
-        axios.get(urlPleated),
+        // axios.get(urlPleated),
     // doesnt work
         // axios.get(urlTwenty),
     // doesnt work
         // axios.get(urlKISW),
     // WORKS
-        axios.get(urlDroid),
+        // axios.get(urlDroid),
     ];
 
     // Create an empty object to store our data
@@ -60,7 +60,7 @@ module.exports = {
                 switch(values.config.url) {
 
                     case urlInstagram:
-                        console.log("Confirmed - Insta");
+                        // console.log("Confirmed - Insta");
                         $(".KL4Bh").each(function () {
                             // imageURL
                             result.push($(this).find("img").attr("src"));
@@ -68,7 +68,7 @@ module.exports = {
                         break;
 
                     case urlTumblr:
-                        console.log("Confirmed - Tumblr");
+                        // console.log("Confirmed - Tumblr");
                         $(".photo-wrapper-inner").each(function () {
                             // imageURL
                             result.push($(this).find("a").children("img").attr("src"));
@@ -76,7 +76,7 @@ module.exports = {
                         break;
 
                     case urlPleated:
-                        console.log("Confirmed - Pleated");
+                        // console.log("Confirmed - Pleated");
                         $(".size-full").each(function () {
                             // imageURL
                             result.push($(this).attr("src"));
@@ -84,7 +84,7 @@ module.exports = {
                         break;
 
                     case urlTwenty:
-                        console.log("Confirmed - Twenty");
+                        // console.log("Confirmed - Twenty");
                         // $(".size-full").each(function () {
                         //     // imageURL
                         //     result.push($(this).attr("src"));
@@ -92,25 +92,25 @@ module.exports = {
                     break;
                     
                     case urlKISW:
-                        console.log("Confirmed - KISW");
+                        // console.log("Confirmed - KISW");
                         $(".NaturalImage-image").each(function () {
                             // imageURL
                             result.push($(this).attr("src"));
                         })
-                        console.log(result)
+                        // console.log(result)
                     break;
                     
                     case urlDroid:
-                        console.log("Confirmed - Droid");
+                        // console.log("Confirmed - Droid");
                         $(".gallery-item").each(function () {
                             // imageURL
                             result.push($(this).find(".item-aux-container").children("a").children("img").attr("src"));
                         })
-                        console.log(result)
+                        // console.log(result)
                     break;
 
                     default:
-                        console.log('default');
+                        // console.log('default');
                 }
 
             }) // Ends forEach loop
@@ -118,7 +118,7 @@ module.exports = {
         // Return extracted memes to DOM
         .then(() => {
             res.json(result);
-            console.log(result);
+            // console.log(result);
         })
         // Error handling
         .catch(err => res.status(422).json(err));

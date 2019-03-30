@@ -12,6 +12,7 @@ import { checkAuthentication } from '../helpers';
 // Import reusable components utilized in this page
 import { List } from "../components/List/index";
 import Meme from "../components/Meme/index";
+import MemeContainer from "../components/MemeContainer/index";
 // Import API methods to trigger proxy routes
 import API from "../utils/API";
 // Import page specific CSS
@@ -30,6 +31,7 @@ export default withAuth(class Memes extends Component {
     this.state = {
       authenticated: null,
       userinfo: null,
+      ready: false,
       scrapedMemes: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -43,30 +45,17 @@ export default withAuth(class Memes extends Component {
   // testing routes END
 
   async componentDidMount() {
-    this.checkAuthentication();
-    console.log('giddy up');
-    API.scrapeMemes()
-      .then(res => {
-        this.setState({
-          scrapedMemes: res.data,
-        });
-        console.log("res");
-        console.log(res);
-      }
-      )
-      .catch(err => console.log(err));
-      this.applyClaims();
-  }
-   async componentDidUpdate() {
-    this.checkAuthentication();
+
+    await this.checkAuthentication();
     this.applyClaims();
+    this.scrapeMemes();
+    console.log(this.state.userinfo);
   }
 
-  async applyClaims() {
-    if (this.state.userinfo && !this.state.claims) {
-      const claims = Object.entries(this.state.userinfo);
-      this.setState({ claims, ready: true });
-    }
+  async componentDidUpdate() {
+    await this.checkAuthentication();
+    this.applyClaims();
+
   }
   // Use this to access the unique id from the above
   // {this.state.claims.map((claimEntry) => {
@@ -81,9 +70,36 @@ export default withAuth(class Memes extends Component {
     this.props.auth.login('/');
   }
 
+  async applyClaims() {
+    if (this.state.userinfo && !this.state.claims) {
+      const claims = Object.entries(this.state.userinfo);
+      this.setState({ claims, ready: true });
+    }
+  }
+
   scrapeMemes = () => {
-    console.log("this is not a function.  this is just a tribute");
+    API.scrapeMemes()
+    .then(res => {
+      this.setState({
+        scrapedMemes: res.data,
+      });
+      // console.log("res");
+      // console.log(res);
+    })
+    .catch(err => console.log(err));
   };
+
+  saveMeme = () => {
+    API.saveMeme()
+    .then(res => {
+      this.setState({
+        // scrapedMemes: res.data,
+      });
+      console.log("res");
+      console.log(res);
+    })
+    .catch(err => console.log(err));
+  }
 
   render() {
     const resourceServerExamples = [
@@ -98,7 +114,7 @@ export default withAuth(class Memes extends Component {
     ];
 
     return (
-      <div class="body-memesfeed">
+      <div className="body-memesfeed">
         {this.state.authenticated !== null &&
           <div>
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
@@ -114,8 +130,8 @@ export default withAuth(class Memes extends Component {
                         <Meme
                           src={meme}
                         />
-                        <div class="button-rate button-rate-up">YES</div>
-                        <div class="button-rate button-rate-down">NO</div>
+                        <div className="button-rate button-rate-up">YES</div>
+                        <div className="button-rate button-rate-down">NO</div>
                       </React.Fragment>
                     ))}
                   </List>

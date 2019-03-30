@@ -9,7 +9,7 @@ import API from "../utils/API";
 var $ = require("jquery");
 
 export default withAuth(
-  class Memes extends Component {
+  class Home extends Component {
     constructor(props) {
       super(props);
       this.state = { authenticated: null, userinfo: null };
