@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
+// Okta
 import { withAuth } from '@okta/okta-react';
+// React
 import React, { Component } from 'react';
+// Semantic UI
 import { Button, Header } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
-
-// Import components
+// Import reusable components utilized in this page
 import { List } from "../components/List/index";
 import Meme from "../components/Meme/index";
-
+// Import API methods to trigger proxy routes
 import API from "../utils/API";
-
+// Import page specific CSS
 import "./Memes.css"
 
-var $ = require('jquery');
+// var $ = require('jquery');
+
 export default withAuth(class Memes extends Component {
   constructor(props) {
     super(props);
@@ -98,6 +101,7 @@ export default withAuth(class Memes extends Component {
               <div>
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.scrapedMemes.length}</p> */}
+                <p>The array is currently {this.state.scrapedMemes.length} memes long</p>
                 {this.state.scrapedMemes.length ? (
                   <List>
                     {this.state.scrapedMemes.map(meme => (
