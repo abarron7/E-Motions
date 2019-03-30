@@ -1,3 +1,6 @@
+// Contains the React Router
+// Determines the React pages that will be rendered
+
 /*
  * Copyright (c) 2018, Okta, Inc. and/or its affiliates. All rights reserved.
  * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
@@ -19,7 +22,7 @@ import config from './.samples.config';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Memes from './pages/Memes';
-import Messages from './pages/Messages';
+import Saved from './pages/Saved';
 import Profile from './pages/Profile';
 
 class App extends Component {
@@ -35,7 +38,7 @@ class App extends Component {
           <Container text style={{ marginTop: '7em' }}>
             <Route path="/" exact component={Home} />
             <Route path="/implicit/callback" component={ImplicitCallback} />
-            <SecureRoute path="/messages" component={Messages} />
+            <SecureRoute path="/saved" component={Saved} />
             <SecureRoute path="/memes" component={Memes} />
             <SecureRoute path="/profile" component={Profile} />
           </Container>

@@ -1,52 +1,56 @@
-// imports models
+// Controls the scrape method
 
-// exports scraper functions (e.g. presumably there should be no DB work here)
+    ///                            ///
+    ///        DEPENDENCIES        ///
+    ///                            ///
 
-///                            ///
-///        DEPENDENCIES        ///
-///                            ///
-
-// SCRAPING
+// For scraping
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-// MOMENT
-const moment = require("moment");
-
-// TEMP
+// TEMP - Delete this
 const fs = require("fs");
 
-// MODELS
+// DB Models
 const db = require("../models");
 
-module.exports = {
-  findAll: function(req, res) {    
-    console.log("~~~Scrape route activated yo");
+    ///                            ///
+    ///           LOGIC            ///
+    ///                            ///
 
+// Exports all scraper methods
+module.exports = {
+
+  // Scrape all methods
+  findAll: function(req, res) {    
     var promises = [
         axios.get("https://wholesome-memes-only.tumblr.com/"),
         axios.get("https://wholesome-memes-only.tumblr.com/")
     ];
-
+    // Create an empty object to store our data
+    var result = [];
+    // Loop over promise array and extract meme url/info/etc.
     Promise.all(promises)
-        .then(function (scrapedResponses) {
+        // Loop through scraped responses
+        .then(scrapedResponses => {
             scrapedResponses.forEach(function(values) {
                 // Load the response into cheerio and store it as a short-hand selector
                 var $ = cheerio.load(values.data);
                                 
-                // Save from wholesome-memes-only.tumbler
+                // FROM: Wholesome-Memes-Only
                 $(".photo-wrapper-inner").each(function (i, element) {
-
-                    // Create an empty object to store our data
-                    var result = {};
-
-                    // Pull the desired information
+                // Pull the desired information
                     // Image info
-                    result.imageURL = $(this).find("a").children("img").attr("src");
+                    result.push($(this).find("a").children("img").attr("src"));
                 })
             })
         })
-        .then(scrapedMemes => res.json(scrapedMemes))
+        // Return extracted memes to DOM
+        .then(() => {
+            res.json(result);
+            console.log(result);
+        })
+        // Error handling
         .catch(err => res.status(422).json(err));
     }
 };

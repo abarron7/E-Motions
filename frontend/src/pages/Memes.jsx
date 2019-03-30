@@ -1,3 +1,6 @@
+// Contains the React JSX New Memes page
+// Contains the functions and components/elements required for this page
+
 /*
  * Copyright (c) 2018, Okta, Inc. and/or its affiliates. All rights reserved.
  * The Okta software accompanied by this notice is provided pursuant to the Apache License, Version 2.0 (the "License.")
@@ -15,11 +18,13 @@ import React, { Component } from 'react';
 import { Button, Header } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
 
-import API from "../utils/API";
-
 // Import components
 import { List } from "../components/List/index";
 import Meme from "../components/Meme/index";
+
+import API from "../utils/API";
+
+import "./Memes.css"
 
 var $ = require('jquery');
 export default withAuth(class Memes extends Component {
@@ -42,14 +47,22 @@ export default withAuth(class Memes extends Component {
   // testing routes START
   handleSubmit(event) {
     event.preventDefault();
-    fetch(`/api/greeting?name=${encodeURIComponent(this.state.name)}`)
-      .then(response => response.json())
-      .then(state => this.setState(state));
   }
   // testing routes END
 
   async componentDidMount() {
     this.checkAuthentication();
+    console.log('giddy up');
+    API.scrapeMemes()
+      .then(res => {
+        this.setState({
+          scrapedMemes: res.data,
+        });
+        console.log("res");
+        console.log(res);
+      }
+      )
+      .catch(err => console.log(err));
   }
 
   async componentDidUpdate() {
@@ -61,13 +74,7 @@ export default withAuth(class Memes extends Component {
   }
 
   scrapeMemes = () => {
-    API.scrapeMemes()
-      .then(res =>
-        this.setState({
-          scrapedMemes: res.data
-        })
-      )
-      .catch(err => console.log(err));
+    console.log("this is not a function.  this is just a tribute");
   };
 
   render() {
@@ -83,28 +90,30 @@ export default withAuth(class Memes extends Component {
     ];
 
     return (
-      <div>
+      <div class="body-memesfeed">
         {this.state.authenticated !== null &&
           <div>
-            <Header as="h1">Custom Login Page with Sign In Widget</Header>
+            {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
             {this.state.authenticated &&
               <div>
-                <p>Welcome back, {this.state.userinfo.name}!</p>
-                <p>MEMES WILL GO HERE</p>
-                <button onClick={() => this.scrapeMemes()}>Click Me</button>
+                {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
+                {/* <p>Length is {this.state.scrapedMemes.length}</p> */}
                 {this.state.scrapedMemes.length ? (
                   <List>
                     {this.state.scrapedMemes.map(meme => (
-                      <Meme
-                        key={meme.id}
-                        url={meme.url}
-                      />
+                      <React.Fragment>
+                        <Meme
+                          src={meme}
+                        />
+                        <div class="button-rate button-rate-up">YES</div>
+                        <div class="button-rate button-rate-down">NO</div>
+                      </React.Fragment>
                     ))}
                   </List>
                 ) : (
                   <div className="mockup-content">
                     <h4 className="heading-title text-center">
-                      <div>whoops!</div>
+                      <div></div>
                     </h4>
                   </div>
                 )}

@@ -1,0 +1,11 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    
+}
+
+.ui.text.container {
+    margin-top: 6rem !important;
+}

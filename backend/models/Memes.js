@@ -1,3 +1,5 @@
+// Creates the Memes DB model
+
                 ///                            ///
                 ///        DEPENDENCIES        ///
                 ///                            ///
@@ -31,5 +33,5 @@ var MemesSchema = new Schema({
 // Create a mongoose model using the Schema
 var Memes = mongoose.model("Memes", MemesSchema);
 
-// Export the Events model
+// Export the Memes model
 module.exports = Memes;

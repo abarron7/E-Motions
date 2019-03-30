@@ -1,3 +1,5 @@
+// Monitors authentication state
+
 /**
  * Helper function that watches the authenticate state, then applies it
  * as a boolean (authenticated) as well as attaches the userinfo data.

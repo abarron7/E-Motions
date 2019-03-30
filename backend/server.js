@@ -1,31 +1,44 @@
-                ///                            ///
-                ///        DEPENDENCIES        ///
-                ///                            ///
+// This is the app's backend start point.  It establishes a connection to:
+  // User authentication (Okta)
+  // The Mongo DB (Mongoose)
+  // An Express server
+    // Express API routes direct API and DB traffic to and from the back end, via a proxy from the front end
+    // All other routes direct the user to the single page React app
 
+////////////////////////////////////////
+///                                  ///
+///           DEPENDENCIES           ///
+///                                  ///
+////////////////////////////////////////
+
+    // ~~~ EXPRESS ~~~ //
 const express = require('express');
 const logger = require("morgan");
-
-const mongoose = require("mongoose");
-
-const cors = require('cors');
-const path = require('path');
-
 const routes = require("./routes");
 const PORT = process.env.PORT || 5000;
 
+    // ~~~ DATABASE ~~~ //
+const mongoose = require("mongoose");
+
+    // ~~~ OTHER ~~~ //
+const cors = require('cors');
+const path = require('path');
+
+    // ~~~ OKTA ~~~ //
 const OktaJwtVerifier = require('@okta/jwt-verifier');
-var $ = require('jquery');
 
 
-                ///                            ///
-                ///           LOGIC            ///
-                ///                            ///
+////////////////////////////////////////
+///                                  ///
+///               LOGIC              ///
+///                                  ///
+////////////////////////////////////////
 
+    //////////////
+    //   OKTA   //
+    //////////////
 
-
-      //////////
-      // OKTA //
-
+// ???
 const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: 'https://dev-817020.okta.com/oauth2/default',
   clientId: '0oadjrwyhSqaqWDTz356',
@@ -34,10 +47,12 @@ const oktaJwtVerifier = new OktaJwtVerifier({
   },
 });
 
+// ???
 const url = require('url');
 // const sampleConfig = require('../.samples.config.json');
 // const SampleWebServer = require('../common/sample-web-server');
 
+// ???
 const oidcMiddlewareConfig = {
   routes: {
     login: {
@@ -83,36 +98,9 @@ function authenticationRequired(req, res, next) {
     });
 }
 
-      /////////////
-      // EXPRESS //
-
-const app = express();
-
-  // MIDDLEWARE
-/**
- * For local testing only!  Enables CORS for all domains
- */
-app.use(cors());
-
-// Use morgan logger for logging requests
-app.use(logger("dev"));
-
-// Configure body parsing for AJAX requests
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'build')));
-app.use(express.static('public'));
-
-// Serve up static assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../frontend/build/"));
-}
-
-
-      //////////////
-      // MONGOOSE //
+    //////////////////
+    //   MONGOOSE   //
+    //////////////////
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
@@ -123,8 +111,33 @@ mongoose.connect(
   {useNewUrlParser: true}
 );
 
+    /////////////////
+    //   EXPRESS   //
+    /////////////////
 
+// Create new instance of express
+const app = express();
 
+// MIDDLEWARE
+// Enable cors
+app.use(cors());
+
+// Use morgan logger for logging requests
+app.use(logger("dev"));
+
+// Configure body parsing for AJAX requests
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Serve static assets
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static('public'));
+
+// Serve up static assets
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../frontend/build/"));
+}
 
 /**
  * An example route that requires a valid access token for authentication, it
@@ -135,18 +148,13 @@ app.get('/secure', authenticationRequired, (req, res) => {
   res.json(req.jwt);
 });
 
+// Serve up single-page app React
 app.get('/', function(req, res) {
   res.json(path.join(__dirname, "../frontend/src/pages/Home.jsx"));
 });
 
-// Add routes, API
+// Add routes, includes both React and API
 app.use(routes);
-
-app.get('/greeting', (req, res) => {
-  const name = req.query.name || 'World';
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-});
 
 // Start the server
 app.listen(PORT, () => {
