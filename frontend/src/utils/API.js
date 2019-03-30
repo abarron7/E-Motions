@@ -1,7 +1,7 @@
 import http from "../services/httpService";
 
 export default {
-  // Gets all saved memes
+  // Gets all new memes
   scrapeMemes: function() {
     return http.get("/api/scrape");
   },

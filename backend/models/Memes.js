@@ -16,7 +16,11 @@ var Schema = mongoose.Schema;
 
 // Create a new Schema
 var MemesSchema = new Schema({
-    URL: {
+    userID: {
+        type: String,
+        require: true
+    },
+    imageURL: {
         type: String,
         required: true
     },
