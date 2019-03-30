@@ -20,7 +20,7 @@ router.use("/scrape", scrapeRoutes);
 
 // For anything else, render the html page
 router.use(function(req, res) {
-  res.sendFile(path.join(__dirname, "../../../frontend/src/pages/Home.jsx"));
+  res.sendFile(path.join(__dirname, "../../client/src/pages/Home.jsx"));
 });
 
 module.exports = router;

@@ -136,7 +136,7 @@ app.use(express.static('public'));
 
 // Serve up static assets
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../frontend/build/"));
+  app.use(express.static("./client/build/"));
 }
 
 /**
@@ -150,7 +150,7 @@ app.get('/secure', authenticationRequired, (req, res) => {
 
 // Serve up single-page app React
 app.get('/', function(req, res) {
-  res.json(path.join(__dirname, "../frontend/src/pages/Home.jsx"));
+  res.json(path.join(__dirname, "./client/src/pages/Home.jsx"));
 });
 
 // Add routes, includes both React and API

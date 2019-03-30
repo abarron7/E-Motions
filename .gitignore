@@ -30,4 +30,4 @@ okta-hosted-login/src/.samples.config.js--
 testenv
 
 backend/node_modules
-frontend/node_modules
+client/node_modules
