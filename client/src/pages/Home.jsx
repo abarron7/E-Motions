@@ -34,7 +34,7 @@ export default withAuth(
         <div>
           {this.state.authenticated !== null && (
             <div>
-              <Header as="h1">Implicit Flow w/ Okta Hosted Login Page</Header>
+              <Header as="h1">E-Motions: A Wholesome Memes Project</Header>
               {this.state.authenticated && (
                 <div>
                   <p>Welcome back, {this.state.userinfo.name}!</p>
@@ -44,6 +44,12 @@ export default withAuth(
                     have an ID token and access token in local storage. Visit
                     the <a href="/profile">My Profile</a> page to take a look
                     inside the ID token.
+                  </p>
+                  <p>
+                    This site allows you to browse through many Wholesome Memes.
+                    These memes were scraped from multiple sites, and are now ready
+                    for you to enjoy!  Simply click on "New Memes" in the search bar
+                    and start enjoying (and saving!) your favourite memes.
                   </p>
                 </div>
               )}

@@ -28,8 +28,6 @@ travis_phantomjs
 okta-oidc-tck
 samples-nodejs-express-4
 .vscode
-.samples.config.js
-custom-login/src/.samples.config.js--
 okta-hosted-login/src/.samples.config.js--
-.samples.config.js--
 testenv
+
