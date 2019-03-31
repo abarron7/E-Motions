@@ -6,6 +6,10 @@ import React, { Component } from "react";
 import { Button, Header } from "semantic-ui-react";
 import { checkAuthentication } from "../helpers";
 import API from "../utils/API";
+
+// Import page specific CSS
+import "./Home.css"
+
 var $ = require("jquery");
 
 export default withAuth(
@@ -54,7 +58,7 @@ export default withAuth(
                 </div>
               )}
               {!this.state.authenticated && (
-                <div>
+                <div className="login-button">
                   <Button id="login-button" primary onClick={this.login}>
                     Login
                   </Button>
