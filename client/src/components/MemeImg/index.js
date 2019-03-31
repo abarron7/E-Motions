@@ -7,9 +7,11 @@ const MemeImg = ({
   
 
   return (
-    <MemeImg>
-      <div>TestIMG</div>
-    </MemeImg>
+    <>
+      <div className="memeContainer">
+        <img className="memeImage" src={src} alt="meme"/>
+      </div>
+    </>
   );
 };
 

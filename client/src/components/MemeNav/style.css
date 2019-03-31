@@ -1,0 +1,20 @@
+.memeNavContainer {
+    text-align: center;
+    margin: 15px;
+}
+
+.memeNavBtns {
+    width: 80px;
+    height: auto;
+
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    border-style: solid;
+    border-width: 3px;
+    border-color: white;
+    border-radius: 50px;
+
+    cursor: pointer;
+}
