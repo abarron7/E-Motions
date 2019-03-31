@@ -2,13 +2,13 @@
 // Contains the functions and components/elements required for this page
 
 // Okta
-import { withAuth } from "@okta/okta-react";
+import { withAuth } from '@okta/okta-react';
 // React
-
-import React, { Component } from "react";
+import React, { Component } from 'react';
 // Semantic UI
-import { Button, Header } from "semantic-ui-react";
-import { checkAuthentication } from "../helpers";
+import { Button, Header } from 'semantic-ui-react';
+import { checkAuthentication } from '../helpers';
+
 // Import reusable components utilized in this page
 // import { List } from "../components/List/index";
 import MemeContainer from "../components/MemeContainer/index";
@@ -18,78 +18,75 @@ import MemeContainer from "../components/MemeContainer/index";
 // Import API methods to trigger proxy routes
 import API from "../utils/API";
 // Import page specific CSS
-import "./Memes.css";
+// import "./Memes.css";
 // audio player
 import ReactAudioPlayer from "react-audio-player";
 import soundFile from "./wow.mp3";
 // var $ = require('jquery');
-export default withAuth(
-  class Memes extends Component {
-    constructor(props) {
-      super(props);
-      // this.state = { authenticated: null, userinfo: null };
-      this.checkAuthentication = checkAuthentication.bind(this);
-      this.login = this.login.bind(this);
 
-      // testing routes START
-      this.state = {
-        authenticated: null,
-        userinfo: null,
-        ready: false,
-        scrapedMemes: []
-      };
-      this.handleSubmit = this.handleSubmit.bind(this);
-      // testing routes END
-    }
+export default withAuth(class Memes extends Component {
+  constructor(props) {
+    super(props);
+    // this.state = { authenticated: null, userinfo: null };
+    this.checkAuthentication = checkAuthentication.bind(this);
+    this.login = this.login.bind(this);
 
     // testing routes START
-    handleSubmit(event) {
-      event.preventDefault();
-    }
-    // testing routes END
-
-    async componentDidMount() {
-      await this.checkAuthentication();
-      this.applyClaims();
-      this.scrapeMemes();
-      console.log(this.state.userinfo);
-    }
-
-    async componentDidUpdate() {
-      await this.checkAuthentication();
-      this.applyClaims();
-    }
-    // Use this to access the unique id from the above
-    // {this.state.claims.map((claimEntry) => {
-    //   const claimName = claimEntry[0];
-    //   const claimValue = claimEntry[1];
-    //   const claimId = `claim-${claimName}`;
-    //   console.log(claimEntry)
-    //   return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
-    // })}
-
-    async login() {
-      this.props.auth.login("/");
-    }
-
-    async applyClaims() {
-      if (this.state.userinfo && !this.state.claims) {
-        const claims = Object.entries(this.state.userinfo);
-        this.setState({ claims, ready: true });
+    this.state = {
+      authenticated: null,
+      userinfo: null,
+      ready: false,
+      scrapedMemes: [],
+      currentMeme: {
+        index: null,
+        url: null,
       }
-    }
-
-    scrapeMemes = () => {
-      API.scrapeMemes()
-        .then(res => {
-          this.setState({
-            scrapedMemes: res.data
-          });
-          // console.log("res");
-          // console.log(res);
-        })
-        .catch(err => console.log(err));
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    // testing routes END
+  }
+
+  // testing routes START
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+  // testing routes END
+
+  async componentDidMount() {
+    await this.checkAuthentication();
+    // this.applyClaims();
+    this.scrapeMemes();
+    console.log(this.state.userinfo);
+  }
+
+  async componentDidUpdate() {
+    await this.checkAuthentication();
+    // this.applyClaims();    
+  }
+
+  async login() {
+    this.props.auth.login('/');
+  }
+
+  // async applyClaims() {
+  //   if (this.state.userinfo && !this.state.claims) {
+  //     const claims = Object.entries(this.state.userinfo);
+  //     this.setState({ claims, ready: true });
+  //   }
+  // }
+
+  scrapeMemes = () => {
+    API.scrapeMemes()
+    .then(res => {
+      this.setState({
+        scrapedMemes: res.data,
+      });
+      // console.log("res");
+      // console.log(res);
+    })
+    .catch(err => console.log(err));
+  };
+
   getCurrentMeme = () => {
     var randomIndex = Math.floor(Math.random() * (this.state.scrapedMemes.length + 1));
     this.state.scrapedMemes.map((selectedMemeURL, index) => {
@@ -107,19 +104,19 @@ export default withAuth(
     })
   };
 
+  saveMeme = () => {
+    API.saveMeme()
+    .then(res => {
+      this.setState({
+        // scrapedMemes: res.data,
+      });
+      console.log("res");
+      console.log(res);
+    })
+    .catch(err => console.log(err));
+  }
 
-    saveMeme = () => {
-      API.saveMeme()
-        .then(res => {
-          this.setState({
-            // scrapedMemes: res.data,
-          });
-          console.log("res");
-          console.log(res);
-        })
-        .catch(err => console.log(err));
-    };
-    render() {
+  render() {
     return (
       <div className="body-memesfeed">
         {this.state.authenticated !== null && (
