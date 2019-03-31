@@ -148,7 +148,9 @@ export default withAuth(class Memes extends Component {
                 
                 
                   {this.getCurrentMeme()}
-                  <img src={this.state.currentMeme.url}></img>
+                  <Meme
+                  src={this.state.currentMeme.url}
+                  id="xyz"></Meme>
                   <p>Current meme is {this.state.currentMeme.index}</p>
                 
 

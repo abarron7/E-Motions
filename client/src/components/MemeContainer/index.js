@@ -5,7 +5,7 @@ import MemeImg from "../MemeImg";
 import MemeNav from "../MemeNav";
 
 const MemeContainer = ({
-  src
+  
 }) => {
   
 
