@@ -19,15 +19,16 @@ class MemeNav extends Component {
             // onClick={() => this.props.handleMemeDislike(memeInfo)}
           ></img>
 
+          <img className="memeNavBtns" src={memeNavThumbsUp}
+            onClick={() => this.props.handleMemeLike()}
+            // onClick={() => this.props.handleMemeLike(memeInfo)}
+          ></img>
+
           <img className="memeNavBtns" src={memeNavShare}
             onClick={() => this.props.handleMemeShare()}
             // onClick={() => this.props.handleMemeShare(memeInfo)}
           ></img>
 
-          <img className="memeNavBtns" src={memeNavThumbsUp}
-            onClick={() => this.props.handleMemeLike()}
-            // onClick={() => this.props.handleMemeLike(memeInfo)}
-          ></img>
           
         </div>
       </>

@@ -12,6 +12,6 @@ router.route("/")
 
 // Matches with "/api/memes/:id"
 router.route("/:id")
-  .delete(dbController.remove);
+  .delete(dbController.deleteMeme);
 
 module.exports = router;
