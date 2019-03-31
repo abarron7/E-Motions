@@ -15,12 +15,12 @@ export default class MemeContainer extends Component {
     alert("This is the Dislike button");
   }
 
-  handleMemeLike(dataFromChild) {
-    alert("This is the Like button");
-  }
-
   handleMemeShare(dataFromChild) {
     alert("This is the Share button");
+  }
+  
+  handleMemeLike() {
+    this.props.handleSaveMeme();
   }
 
   // handleMemeLike = async id => {
@@ -64,8 +64,8 @@ export default class MemeContainer extends Component {
           ></MemeImg>
         <MemeNav
           handleMemeDislike={this.handleMemeDislike}
-          handleMemeLike={this.handleMemeLike}
           handleMemeShare={this.handleMemeShare}
+          handleMemeLike={this.handleMemeLike}
         ></MemeNav>
       </div>
     );

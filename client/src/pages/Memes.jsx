@@ -84,7 +84,9 @@ export default withAuth(class Memes extends Component {
       // console.log("res");
       // console.log(res);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err);
+    });
   };
 
   getCurrentMeme = () => {
@@ -104,8 +106,9 @@ export default withAuth(class Memes extends Component {
     })
   };
 
-  saveMeme = () => {
-    API.saveMeme()
+  handleSaveMeme = () => {
+    alert("firing handleSaveMeme");
+    API.saveMeme(this.state.currentMeme.url)
     .then(res => {
       this.setState({
         // scrapedMemes: res.data,
@@ -135,6 +138,7 @@ export default withAuth(class Memes extends Component {
                   {this.state.currentMeme.url != null &&
                     <MemeContainer
                       src={this.state.currentMeme.url}
+                      handleSaveMeme={this.handleSaveMeme}
                     >
                     </MemeContainer>
                   }

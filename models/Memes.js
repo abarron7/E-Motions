@@ -25,12 +25,8 @@ var MemesSchema = new Schema({
         required: true
     },
     reviewed: {
-        type: Boolean,
-        default: false
-    },
-    liked: {
-        type: Boolean,
-        default: false
+        type: String
+        // can be liked, disliked, or new
     }
 });
 
