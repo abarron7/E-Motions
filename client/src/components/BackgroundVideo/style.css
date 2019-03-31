@@ -1,0 +1,32 @@
+#bg-video-container {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+/* OPTION 1 */
+    /* width: 120%; */
+/* OPTION 2 */
+    width: 100%;
+    height: 100%; 
+    overflow: hidden;
+    z-index: -100;
+    /* opacity: 0.95; */
+}
+
+#bg-video {
+    /* Make video to at least 100% wide and tall */
+    min-width: 100%; 
+    min-height: 100%; 
+
+    /* Setting width & height to auto prevents the browser from stretching or squishing the video */
+    width: auto;
+    height: auto;
+
+    /* Center the video */
+    position: absolute;
+    top: 50%;
+/* OPTION 1 */
+    /* left: 40%; */
+/* OPTION 2 */
+    left: 50%;
+    transform: translate(-50%,-50%);
+}

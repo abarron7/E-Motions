@@ -35,9 +35,9 @@ module.exports = {
     // doesnt work
         // axios.get(urlInstagram),
     // WORKS
-        axios.get(urlTumblr),
+        // axios.get(urlTumblr),
     // WORKS
-        // axios.get(urlPleated),
+        axios.get(urlPleated),
     // doesnt work
         // axios.get(urlTwenty),
     // doesnt work

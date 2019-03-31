@@ -20,14 +20,18 @@ import React, { Component } from 'react';
 // Semantic UI
 import { Button, Header } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
+
 // Import reusable components utilized in this page
-import { List } from "../components/List/index";
-import Meme from "../components/Meme/index";
+// import { List } from "../components/List/index";
 import MemeContainer from "../components/MemeContainer/index";
+// import MemeImg from "../components/MemeImg/index";
+// import MemeNav from "../components/MemeNav/index";
+
 // Import API methods to trigger proxy routes
 import API from "../utils/API";
+
 // Import page specific CSS
-import "./Memes.css"
+// import "./Memes.css"
 
 // var $ = require('jquery');
 
@@ -46,7 +50,7 @@ export default withAuth(class Memes extends Component {
       scrapedMemes: [],
       currentMeme: {
         index: null,
-        url: 'https://cdn1.iconfinder.com/data/icons/dinosaur/154/small-dino-dinosaur-dragon-walk-512.png'
+        url: null,
       }
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -61,26 +65,26 @@ export default withAuth(class Memes extends Component {
 
   async componentDidMount() {
     await this.checkAuthentication();
-    this.applyClaims();
+    // this.applyClaims();
     this.scrapeMemes();
     console.log(this.state.userinfo);
   }
 
   async componentDidUpdate() {
     await this.checkAuthentication();
-    this.applyClaims();    
+    // this.applyClaims();    
   }
 
   async login() {
     this.props.auth.login('/');
   }
 
-  async applyClaims() {
-    if (this.state.userinfo && !this.state.claims) {
-      const claims = Object.entries(this.state.userinfo);
-      this.setState({ claims, ready: true });
-    }
-  }
+  // async applyClaims() {
+  //   if (this.state.userinfo && !this.state.claims) {
+  //     const claims = Object.entries(this.state.userinfo);
+  //     this.setState({ claims, ready: true });
+  //   }
+  // }
 
   scrapeMemes = () => {
     API.scrapeMemes()
@@ -136,19 +140,26 @@ export default withAuth(class Memes extends Component {
     ];
 
     return (
-      <div className="body-memesfeed">
+      <>
         {this.state.authenticated !== null &&
           <div>
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
             {this.state.authenticated &&
-              <div>
+              <>
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.scrapedMemes.length}</p> */}
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
                 
-                
+                  {/* Function, try to not call it here */}
                   {this.getCurrentMeme()}
-                  <img src={this.state.currentMeme.url}></img>
+
+                  {this.state.currentMeme.url != null &&
+                    <MemeContainer
+                      src={this.state.currentMeme.url}
+                    >
+                    </MemeContainer>
+                  }
+
                   <p>Current meme is {this.state.currentMeme.index}</p>
                 
 
@@ -174,7 +185,7 @@ export default withAuth(class Memes extends Component {
                   </div>
                 )} */}
 
-              </div>
+              </>
             }
             {!this.state.authenticated &&
               <div>
@@ -199,7 +210,7 @@ export default withAuth(class Memes extends Component {
             }
         </div>
         }
-      </div>
+      </>
     );
   }
 });

@@ -1,0 +1,14 @@
+.memeImage {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    min-width: 70%;
+
+    border-style: solid;
+    border-color: white;
+    border-width: 3px;
+    border-radius: 15px;
+
+    display: block;
+    margin: 0 auto;
+}
