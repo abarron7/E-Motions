@@ -7,19 +7,17 @@ import MemeNav from "../MemeNav";
 export default class MemeContainer extends Component {
   constructor(props) {
     super(props);
-
-    this.handleMemeDislike = this.handleMemeDislike.bind(this);
   }
 
-  handleMemeDislike(dataFromChild) {
+  handleMemeDislike = () => {
     alert("This is the Dislike button");
   }
 
-  handleMemeShare(dataFromChild) {
+  handleMemeShare = (dataFromChild) => {
     alert("This is the Share button");
   }
   
-  handleMemeLike() {
+  handleMemeLike = () => {
     this.props.handleSaveMeme();
   }
 

@@ -118,8 +118,11 @@ export default withAuth(class Memes extends Component {
   };
 
   handleSaveMeme = () => {
-    alert("firing handleSaveMeme");
-    API.saveMeme(this.state.currentMeme.url)
+    API.saveMeme({
+      userID: "123545",
+      imageURL: this.state.currentMeme.url,
+      review: "Liked"
+    })
     .then(res => {
       this.setState({
         // scrapedMemes: res.data,

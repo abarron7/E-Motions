@@ -115,6 +115,7 @@ module.exports = {
 
             }) // Ends forEach loop
         })
+        
         // Return extracted memes to DOM
         .then(() => {
             res.json(result);

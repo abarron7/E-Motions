@@ -18,13 +18,13 @@ var Schema = mongoose.Schema;
 var MemesSchema = new Schema({
     userID: {
         type: String,
-        require: true
+        required: true
     },
     imageURL: {
         type: String,
         required: true
     },
-    reviewed: {
+    review: {
         type: String
         // can be liked, disliked, or new
     }
