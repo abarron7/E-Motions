@@ -7,10 +7,8 @@ import { withAuth } from "@okta/okta-react";
 
 import React, { Component } from "react";
 // Semantic UI
-
 import { Button, Header } from "semantic-ui-react";
 import { checkAuthentication } from "../helpers";
-
 // Import reusable components utilized in this page
 // import { List } from "../components/List/index";
 import MemeContainer from "../components/MemeContainer/index";
@@ -19,14 +17,11 @@ import MemeContainer from "../components/MemeContainer/index";
 
 // Import API methods to trigger proxy routes
 import API from "../utils/API";
-
 // Import page specific CSS
-
 import "./Memes.css";
 // audio player
 import ReactAudioPlayer from "react-audio-player";
 import soundFile from "./wow.mp3";
-
 // var $ = require('jquery');
 export default withAuth(
   class Memes extends Component {
@@ -48,48 +43,34 @@ export default withAuth(
     }
 
     // testing routes START
-    this.state = {
-      authenticated: null,
-      userinfo: null,
-      ready: false,
-      scrapedMemes: [],
-      currentMeme: {
-        index: null,
-        url: null,
-      }
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
+    handleSubmit(event) {
+      event.preventDefault();
+    }
     // testing routes END
-  }
 
-  // testing routes START
-  handleSubmit(event) {
-    event.preventDefault();
-  }
-  // testing routes END
+    async componentDidMount() {
+      await this.checkAuthentication();
+      this.applyClaims();
+      this.scrapeMemes();
+      console.log(this.state.userinfo);
+    }
 
-  async componentDidMount() {
-    await this.checkAuthentication();
-    // this.applyClaims();
-    this.scrapeMemes();
-    console.log(this.state.userinfo);
-  }
+    async componentDidUpdate() {
+      await this.checkAuthentication();
+      this.applyClaims();
+    }
+    // Use this to access the unique id from the above
+    // {this.state.claims.map((claimEntry) => {
+    //   const claimName = claimEntry[0];
+    //   const claimValue = claimEntry[1];
+    //   const claimId = `claim-${claimName}`;
+    //   console.log(claimEntry)
+    //   return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
+    // })}
 
-  async componentDidUpdate() {
-    await this.checkAuthentication();
-    // this.applyClaims();    
-  }
-
-  async login() {
-    this.props.auth.login('/');
-  }
-
-  // async applyClaims() {
-  //   if (this.state.userinfo && !this.state.claims) {
-  //     const claims = Object.entries(this.state.userinfo);
-  //     this.setState({ claims, ready: true });
-  //   }
-  // }
+    async login() {
+      this.props.auth.login("/");
+    }
 
     async applyClaims() {
       if (this.state.userinfo && !this.state.claims) {
@@ -138,14 +119,14 @@ export default withAuth(
         })
         .catch(err => console.log(err));
     };
-
+    render() {
     return (
-      <>
-        {this.state.authenticated !== null &&
+      <div className="body-memesfeed">
+        {this.state.authenticated !== null && (
           <div>
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
-            {this.state.authenticated &&
-              <>
+            {this.state.authenticated &&(
+              <div>
                 <ReactAudioPlayer src={soundFile} autoPlay />
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.scrapedMemes.length}</p> */}
@@ -186,32 +167,17 @@ export default withAuth(
                   </div>
                 )} */}
 
-              </>
-            }
-            {!this.state.authenticated &&
+              </div>
+            )}
+            {!this.state.authenticated && (
               <div>
-                <p>If you&lsquo;re viewing this page then you have successfully started this React application.</p>
-                <p>
-                  <span>This example shows you how to use the </span>
-                  <a href="https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react">Okta React Library</a>
-                  <span> and the </span>
-                  <a href="https://github.com/okta/okta-signin-widget">Okta Sign-In Widget</a>
-                  <span> to add the </span>
-                  <a href="https://developer.okta.com/authentication-guide/implementing-authentication/implicit">Implicit Flow</a>
-                  <span> to your application. This combination is useful when you want to leverage the features of the Sign-In Widget, </span>
-                  <span> and the authentication helper components from the <code>okta-react</code> module.</span>
-                </p>
-                <p>
-                  Once you have logged in you will be redirected through your authorization server (the issuer defined in config) to create a session for Single-Sign-On (SSO).
-                  After this you will be redirected back to the application with an ID token and access token.
-                  The tokens will be stored in local storage for future use.
-                </p>
                 <Button id="login-button" primary onClick={this.login}>Login</Button>
               </div>
-            }
-        </div>
-        }
-      </>
-    );
+            )}
+            </div>
+        )}
+      </div>
+      );
+    }
   }
 );
