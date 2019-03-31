@@ -15,7 +15,7 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
     
-    save: function(req, res) {
+    saveMeme: function(req, res) {
         db.Memes.create(req.body)
             .then(dbMeme => res.json(dbMeme))
             .catch(err => res.status(422).json(err));

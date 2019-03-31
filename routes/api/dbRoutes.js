@@ -8,7 +8,7 @@ const dbController = require("../../controllers/dbController");
 // Matches with "/api/memes"
 router.route("/")
   .get(dbController.findAllSaved)
-  .post(dbController.save);
+  .post(dbController.saveMeme);
 
 // Matches with "/api/memes/:id"
 router.route("/:id")
