@@ -1,140 +1,169 @@
-/*!
- * Fairy Dust Cursor.js
- * - 90's cursors collection
- * -- https://github.com/tholman/90s-cursor-effects
- * -- https://codepen.io/tholman/full/jWmZxZ/
- */
+// <![CDATA[
+var colour="#f0e7cc";
+var sparkles=120;
 
-(function fairyDustCursor() {
-  
-    var possibleColors = ["#D61C59", "#E7D84B", "#1B8798"]
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    var cursor = {x: width/2, y: width/2};
-    var particles = [];
-    
-    function init() {
-      bindEvents();
-      loop();
+/****************************
+*  Tinkerbell Magic Sparkle *
+* (c) 2005 mf2fm web-design *
+*  http://www.mf2fm.com/rv  *
+* DON'T EDIT BELOW THIS BOX *
+****************************/
+var x=ox=400;
+var y=oy=300;
+var swide=800;
+var shigh=600;
+var sleft=sdown=0;
+var tiny=new Array();
+var star=new Array();
+var starv=new Array();
+var starx=new Array();
+var stary=new Array();
+var tinyx=new Array();
+var tinyy=new Array();
+var tinyv=new Array();
+
+window.onload=function() { if (document.getElementById) {
+  var i, rats, rlef, rdow;
+  for (var i=0; i<sparkles; i++) {
+    var rats=createDiv(3, 3);
+    rats.style.visibility="hidden";
+    document.body.appendChild(tiny[i]=rats);
+    starv[i]=0;
+    tinyv[i]=0;
+    var rats=createDiv(5, 5);
+    rats.style.backgroundColor="transparent";
+    rats.style.visibility="hidden";
+    var rlef=createDiv(1, 5);
+    var rdow=createDiv(5, 1);
+    rats.appendChild(rlef);
+    rats.appendChild(rdow);
+    rlef.style.top="2px";
+    rlef.style.left="0px";
+    rdow.style.top="0px";
+    rdow.style.left="2px";
+    document.body.appendChild(star[i]=rats);
+  }
+  set_width();
+  sparkle();
+}}
+
+function sparkle() {
+  var c;
+  if (x!=ox || y!=oy) {
+    ox=x;
+    oy=y;
+    for (c=0; c<sparkles; c++) if (!starv[c]) {
+      star[c].style.left=(starx[c]=x)+"px";
+      star[c].style.top=(stary[c]=y)+"px";
+      star[c].style.clip="rect(0px, 5px, 5px, 0px)";
+      star[c].style.visibility="visible";
+      starv[c]=50;
+      break;
     }
-    
-    // Bind events that are needed
-    function bindEvents() {
-      document.addEventListener('mousemove', onMouseMove);
-      document.addEventListener('touchmove', onTouchMove);
-      document.addEventListener('touchstart', onTouchMove);
-      
-      window.addEventListener('resize', onWindowResize);
+  }
+  for (c=0; c<sparkles; c++) {
+    if (starv[c]) update_star(c);
+    if (tinyv[c]) update_tiny(c);
+  }
+  setTimeout("sparkle()", 40);
+}
+
+function update_star(i) {
+  if (--starv[i]==25) star[i].style.clip="rect(1px, 4px, 4px, 1px)";
+  if (starv[i]) {
+    stary[i]+=1+Math.random()*3;
+    if (stary[i]<shigh+sdown) {
+      star[i].style.top=stary[i]+"px";
+      starx[i]+=(i%5-2)/5;
+      star[i].style.left=starx[i]+"px";
     }
-    
-    function onWindowResize(e) {
-      width = window.innerWidth;
-      height = window.innerHeight;
+    else {
+      star[i].style.visibility="hidden";
+      starv[i]=0;
+      return;
     }
-    
-    function onTouchMove(e) {
-      if( e.touches.length > 0 ) {
-        for( var i = 0; i < e.touches.length; i++ ) {
-          addParticle( e.touches[i].clientX, e.touches[i].clientY, possibleColors[Math.floor(Math.random()*possibleColors.length)]);
-        }
-      }
+  }
+  else {
+    tinyv[i]=50;
+    tiny[i].style.top=(tinyy[i]=stary[i])+"px";
+    tiny[i].style.left=(tinyx[i]=starx[i])+"px";
+    tiny[i].style.width="2px";
+    tiny[i].style.height="2px";
+    star[i].style.visibility="hidden";
+    tiny[i].style.visibility="visible"
+  }
+}
+
+function update_tiny(i) {
+  if (--tinyv[i]==25) {
+    tiny[i].style.width="1px";
+    tiny[i].style.height="1px";
+  }
+  if (tinyv[i]) {
+    tinyy[i]+=1+Math.random()*3;
+    if (tinyy[i]<shigh+sdown) {
+      tiny[i].style.top=tinyy[i]+"px";
+      tinyx[i]+=(i%5-2)/5;
+      tiny[i].style.left=tinyx[i]+"px";
     }
-    
-    function onMouseMove(e) {    
-      cursor.x = e.clientX;
-      cursor.y = e.clientY;
-      
-      addParticle( cursor.x, cursor.y, possibleColors[Math.floor(Math.random()*possibleColors.length)]);
+    else {
+      tiny[i].style.visibility="hidden";
+      tinyv[i]=0;
+      return;
     }
-    
-    function addParticle(x, y, color) {
-      var particle = new Particle();
-      particle.init(x, y, color);
-      particles.push(particle);
-    }
-    
-    function updateParticles() {
-      
-      // Updated
-      for( var i = 0; i < particles.length; i++ ) {
-        particles[i].update();
-      }
-      
-      // Remove dead particles
-      for( var i = particles.length -1; i >= 0; i-- ) {
-        if( particles[i].lifeSpan < 0 ) {
-          particles[i].die();
-          particles.splice(i, 1);
-        }
-      }
-      
-    }
-    
-    function loop() {
-      requestAnimationFrame(loop);
-      updateParticles();
-    }
-    
-    /**
-     * Particles
-     */
-    
-    function Particle() {
-  
-      this.character = "*";
-      this.lifeSpan = 120; //ms
-      this.initialStyles ={
-        "position": "absolute",
-        "display": "block",
-        "pointerEvents": "none",
-        "z-index": "10000000",
-        "fontSize": "24px",
-        "will-change": "transform"
-      };
-  
-      // Init, and set properties
-      this.init = function(x, y, color) {
-  
-        this.velocity = {
-          x:  (Math.random() < 0.5 ? -1 : 1) * (Math.random() / 2),
-          y: 1
-        };
-        
-        this.position = {x: x - 0, y: y - 140};
-        this.initialStyles.color = color;
-  
-        this.element = document.createElement('span');
-        this.element.innerHTML = this.character;
-        applyProperties(this.element, this.initialStyles);
-        this.update();
-        
-        document.querySelector('body').appendChild(this.element);
-      };
-      
-      this.update = function() {
-        this.position.x += this.velocity.x;
-        this.position.y += this.velocity.y;
-        this.lifeSpan--;
-        
-        this.element.style.transform = "translate3d(" + this.position.x + "px," + this.position.y + "px, 0) scale(" + (this.lifeSpan / 120) + ")";
-      }
-      
-      this.die = function() {
-        this.element.parentNode.removeChild(this.element);
-      }
-      
-    }
-    
-    /**
-     * Utils
-     */
-    
-    // Applies css `properties` to an element.
-    function applyProperties( target, properties ) {
-      for( var key in properties ) {
-        target.style[ key ] = properties[ key ];
-      }
-    }
-    
-    init();
-  })();
+  }
+  else tiny[i].style.visibility="hidden";
+}
+
+document.onmousemove=mouse;
+function mouse(e) {
+  set_scroll();
+  y=(e)?e.pageY:event.y+sdown;
+  x=(e)?e.pageX:event.x+sleft;
+}
+
+function set_scroll() {
+  if (typeof(self.pageYOffset)=="number") {
+    sdown=self.pageYOffset;
+    sleft=self.pageXOffset;
+  }
+  else if (document.body.scrollTop || document.body.scrollLeft) {
+    sdown=document.body.scrollTop;
+    sleft=document.body.scrollLeft;
+  }
+  else if (document.documentElement && (document.documentElement.scrollTop || document.documentElement.scrollLeft)) {
+    sleft=document.documentElement.scrollLeft;
+	sdown=document.documentElement.scrollTop;
+  }
+  else {
+    sdown=0;
+    sleft=0;
+  }
+}
+
+window.onresize=set_width;
+function set_width() {
+  if (typeof(self.innerWidth)=="number") {
+    swide=self.innerWidth;
+    shigh=self.innerHeight;
+  }
+  else if (document.documentElement && document.documentElement.clientWidth) {
+    swide=document.documentElement.clientWidth;
+    shigh=document.documentElement.clientHeight;
+  }
+  else if (document.body.clientWidth) {
+    swide=document.body.clientWidth;
+    shigh=document.body.clientHeight;
+  }
+}
+
+function createDiv(height, width) {
+  var div=document.createElement("div");
+  div.style.position="absolute";
+  div.style.height=height+"px";
+  div.style.width=width+"px";
+  div.style.overflow="hidden";
+  div.style.backgroundColor=colour;
+  return (div);
+}
+// ]]>
