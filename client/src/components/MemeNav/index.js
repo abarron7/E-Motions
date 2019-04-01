@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./style.css";
-import memeNavShare from '../../assets/images/meme-nav-share.png';
-import memeNavThumbsDown from '../../assets/images/meme-nav-thumbs-down.png';
-import memeNavThumbsUp from '../../assets/images/meme-nav-thumbs-up.png';
+import memeNavShare from "../../assets/images/meme-nav-share.png";
+import memeNavThumbsDown from "../../assets/images/meme-nav-thumbs-down.png";
+import memeNavThumbsUp from "../../assets/images/meme-nav-thumbs-up.png";
 
 class MemeNav extends Component {
   constructor(props) {
@@ -13,25 +13,30 @@ class MemeNav extends Component {
     return (
       <>
         <div className="memeNavContainer">
-
-          <img alt="dislike" className="memeNavBtns" src={memeNavThumbsDown}
+          <img
+            className="memeNavBtns"
+            src={memeNavThumbsDown}
             onClick={() => this.props.handleMemeDislike()}
             // onClick={() => this.props.handleMemeDislike(memeInfo)}
-          ></img>
+          />
 
-          <img alt="share" className="memeNavBtns" src={memeNavShare}
+          <img
+            className="memeNavBtns"
+            src={memeNavShare}
             onClick={() => this.props.handleMemeShare()}
             // onClick={() => this.props.handleMemeShare(memeInfo)}
-          ></img>
+          />
 
-          <img alt="like" className="memeNavBtns" src={memeNavThumbsUp}
+          <img
+            className="memeNavBtns"
+            src={memeNavThumbsUp}
             onClick={() => this.props.handleMemeLike()}
             // onClick={() => this.props.handleMemeLike(memeInfo)}
-          ></img>
+          />
         </div>
       </>
     );
   }
-};
+}
 
 export default MemeNav;
