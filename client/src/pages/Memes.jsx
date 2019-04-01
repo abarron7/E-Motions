@@ -24,6 +24,7 @@ import ReactAudioPlayer from "react-audio-player";
 import soundFile from "./wow.mp3";
 // var $ = require('jquery');
 
+
 export default withAuth(class Memes extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +57,6 @@ export default withAuth(class Memes extends Component {
     await this.checkAuthentication();
     // this.applyClaims();
     this.scrapeMemes();
-    console.log(this.state.userinfo);
   }
 
   async componentDidUpdate() {
@@ -67,13 +67,6 @@ export default withAuth(class Memes extends Component {
   async login() {
     this.props.auth.login('/');
   }
-
-  // async applyClaims() {
-  //   if (this.state.userinfo && !this.state.claims) {
-  //     const claims = Object.entries(this.state.userinfo);
-  //     this.setState({ claims, ready: true });
-  //   }
-  // }
 
   scrapeMemes = () => {
     API.scrapeMemes()
@@ -104,9 +97,12 @@ export default withAuth(class Memes extends Component {
     })
   };
 
-  handleLikeMeme = () => {
+// saves the meme with the userID
+  handleSaveMeme = () => {
+    let id = this.state.userinfo.sub;
+    console.log(this.state.userinfo);
     API.saveMeme({
-      userID: "123545",
+      userID: id,
       imageURL: this.state.currentMeme.url,
       review: "Liked"
     })
@@ -144,8 +140,7 @@ export default withAuth(class Memes extends Component {
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
                 
                   {/* Function, try to not call it here */}
-                  {/* {this.getCurrentMeme()} */}
-
+                  {this.getCurrentMeme()}
                   {this.state.currentMeme.url != null &&
                     <MemeContainer
                       src={this.state.currentMeme.url}
