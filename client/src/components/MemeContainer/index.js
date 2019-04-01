@@ -9,28 +9,17 @@ export default class MemeContainer extends Component {
     super(props);
   }
 
-  handleMemeDislike = () => {
-    alert("This is the Dislike button");
+  handleMemeDislikeChain = () => {
+    this.props.handleDislikeMeme();
   }
 
-  handleMemeShare = (dataFromChild) => {
+  handleMemeShareChain = (dataFromChild) => {
     alert("This is the Share button");
   }
   
-  handleMemeLike = () => {
-    this.props.handleSaveMeme();
+  handleMemeLikeChain = () => {
+    this.props.handleLikeMeme();
   }
-
-  // handleMemeLike = async id => {
-  //   const originalBooks = this.state.books;
-  //   try {
-  //     await API.deleteBook(id).then(res => this.getSavedBooks());
-  //   } catch (ex) {
-  //     if (ex.response && ex.response.status === 404)
-        
-  //     this.setState({ books: originalBooks });
-  //   }
-  // };
 
   // handleMemeDislike = async id => {
   //   const originalBooks = this.state.books;
@@ -61,9 +50,9 @@ export default class MemeContainer extends Component {
           src={this.props.src}
           ></MemeImg>
         <MemeNav
-          handleMemeDislike={this.handleMemeDislike}
-          handleMemeShare={this.handleMemeShare}
-          handleMemeLike={this.handleMemeLike}
+          handleMemeDislike={this.handleMemeDislikeChain}
+          handleMemeShare={this.handleMemeShareChain}
+          handleMemeLike={this.handleMemeLikeChain}
         ></MemeNav>
       </div>
     );

@@ -81,8 +81,7 @@ export default withAuth(class Memes extends Component {
       this.setState({
         scrapedMemes: res.data,
       });
-      // console.log("res");
-      // console.log(res);
+      this.getCurrentMeme();
     })
     .catch(err => {
       console.log(err);
@@ -94,7 +93,6 @@ export default withAuth(class Memes extends Component {
     this.state.scrapedMemes.map((selectedMemeURL, index) => {
       if (index == randomIndex) {
         console.log("index " + randomIndex + " is for " + selectedMemeURL);
-        this.state.scrapedMemes.splice(index, 1);
         this.setState({
           currentMeme: {
             index: index,
@@ -106,18 +104,28 @@ export default withAuth(class Memes extends Component {
     })
   };
 
-  handleSaveMeme = () => {
+  handleLikeMeme = () => {
     API.saveMeme({
       userID: "123545",
       imageURL: this.state.currentMeme.url,
       review: "Liked"
     })
     .then(res => {
-      this.setState({
-        // scrapedMemes: res.data,
-      });
-      console.log("res");
-      console.log(res);
+      this.state.scrapedMemes.splice(this.state.currentMeme.index, 1);
+      this.getCurrentMeme();
+    })
+    .catch(err => console.log(err));
+  }
+
+  handleDislikeMeme = () => {
+    API.saveMeme({
+      userID: "123545",
+      imageURL: this.state.currentMeme.url,
+      review: "Disliked"
+    })
+    .then(res => {
+      this.state.scrapedMemes.splice(this.state.currentMeme.index, 1);
+      this.getCurrentMeme();
     })
     .catch(err => console.log(err));
   }
@@ -136,12 +144,13 @@ export default withAuth(class Memes extends Component {
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
                 
                   {/* Function, try to not call it here */}
-                  {this.getCurrentMeme()}
+                  {/* {this.getCurrentMeme()} */}
 
                   {this.state.currentMeme.url != null &&
                     <MemeContainer
                       src={this.state.currentMeme.url}
-                      handleSaveMeme={this.handleSaveMeme}
+                      handleDislikeMeme={this.handleDislikeMeme}
+                      handleLikeMeme={this.handleLikeMeme}
                     >
                     </MemeContainer>
                   }
