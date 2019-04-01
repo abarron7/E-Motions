@@ -28,7 +28,6 @@ class MemeNav extends Component {
             onClick={() => this.props.handleMemeLike()}
             // onClick={() => this.props.handleMemeLike(memeInfo)}
           ></img>
-          
         </div>
       </>
     );

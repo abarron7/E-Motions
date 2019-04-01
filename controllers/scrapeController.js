@@ -35,7 +35,7 @@ module.exports = {
     // doesnt work
         // axios.get(urlInstagram),
     // WORKS
-        // axios.get(urlTumblr),
+        axios.get(urlTumblr),
     // WORKS
         axios.get(urlPleated),
     // doesnt work
@@ -43,11 +43,11 @@ module.exports = {
     // doesnt work
         // axios.get(urlKISW),
     // WORKS
-        // axios.get(urlDroid),
+        axios.get(urlDroid),
     ];
 
     // Create an empty object to store our data
-    var result = [];
+    var results = [];
     // Loop over promise array and extract meme url/info/etc.
     Promise.all(promises)
         // Loop through scraped responses
@@ -63,7 +63,7 @@ module.exports = {
                         // console.log("Confirmed - Insta");
                         $(".KL4Bh").each(function () {
                             // imageURL
-                            result.push($(this).find("img").attr("src"));
+                            results.push($(this).find("img").attr("src"));
                         })
                         break;
 
@@ -71,7 +71,7 @@ module.exports = {
                         // console.log("Confirmed - Tumblr");
                         $(".photo-wrapper-inner").each(function () {
                             // imageURL
-                            result.push($(this).find("a").children("img").attr("src"));
+                            results.push($(this).find("a").children("img").attr("src"));
                         })
                         break;
 
@@ -79,7 +79,7 @@ module.exports = {
                         // console.log("Confirmed - Pleated");
                         $(".size-full").each(function () {
                             // imageURL
-                            result.push($(this).attr("src"));
+                            results.push($(this).attr("src"));
                         })
                         break;
 
@@ -87,7 +87,7 @@ module.exports = {
                         // console.log("Confirmed - Twenty");
                         // $(".size-full").each(function () {
                         //     // imageURL
-                        //     result.push($(this).attr("src"));
+                        //     results.push($(this).attr("src"));
                         // })
                     break;
                     
@@ -95,18 +95,18 @@ module.exports = {
                         // console.log("Confirmed - KISW");
                         $(".NaturalImage-image").each(function () {
                             // imageURL
-                            result.push($(this).attr("src"));
+                            results.push($(this).attr("src"));
                         })
-                        // console.log(result)
+                        // console.log(results)
                     break;
                     
                     case urlDroid:
                         // console.log("Confirmed - Droid");
                         $(".gallery-item").each(function () {
                             // imageURL
-                            result.push($(this).find(".item-aux-container").children("a").children("img").attr("src"));
+                            results.push($(this).find(".item-aux-container").children("a").children("img").attr("src"));
                         })
-                        // console.log(result)
+                        // console.log(results)
                     break;
 
                     default:
@@ -118,8 +118,8 @@ module.exports = {
         
         // Return extracted memes to DOM
         .then(() => {
-            res.json(result);
-            // console.log(result);
+            res.json(results);
+            // console.log(results);
         })
         // Error handling
         .catch(err => res.status(422).json(err));
@@ -154,7 +154,7 @@ module.exports = {
 
 
 
-                // fs.appendFile("text.txt", result.imageURL + "\n\n", function(err) {
+                // fs.appendFile("text.txt", results.imageURL + "\n\n", function(err) {
                 //     if (err) {
                 //         return console.log(err);
                 //     }
@@ -166,15 +166,15 @@ module.exports = {
                 // Check if meme already exists, if not then create new document
                 // db.Memes
                 //     .findOne({$and: [
-                //         {imageURL: result.imageURL}
+                //         {imageURL: results.imageURL}
                 //     ]}, {limit: 1})
                 //     .then(function (foundID) {
                 //         if (foundID) {
                 //             console.log("Meme already exists")
                 //         } else {
                 //             console.log("Meme doesn't exist yet - adding!")
-                //             // Create result in database
-                //             db.Memes.create(result)
+                //             // Create results in database
+                //             db.Memes.create(results)
                 //                 .then(function () {})
                 //                 .catch(function (error) {
                 //                     return res.json(error);

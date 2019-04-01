@@ -21,7 +21,7 @@ module.exports = {
             .catch(err => res.status(422).json(err));
     },
     
-    remove: function(req, res) {
+    deleteMeme: function(req, res) {
         db.Memes.findById(req.params.id)
             .then(dbMeme => dbMeme.remove())
             .then(dbMeme => res.json(dbMeme))
