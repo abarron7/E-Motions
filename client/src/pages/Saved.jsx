@@ -5,7 +5,7 @@ import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { Button, Header, Icon, Message, Table } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
-import API from "../utils/API";
+// import API from "../utils/API";
 
 // Import components
 import { List } from "../components/List/index";

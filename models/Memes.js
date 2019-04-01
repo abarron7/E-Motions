@@ -28,6 +28,10 @@ var MemesSchema = new Schema({
         type: String
         // can be liked, disliked, or new
     }
+    // uniqueID: {
+    //     type: String,
+    //     required: true
+    // }
 });
 
 // Create a mongoose model using the Schema

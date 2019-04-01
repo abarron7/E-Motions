@@ -5,12 +5,12 @@ import { withAuth } from "@okta/okta-react";
 import React, { Component } from "react";
 import { Button, Header } from "semantic-ui-react";
 import { checkAuthentication } from "../helpers";
-import API from "../utils/API";
+// import API from "../utils/API";
 
 // Import page specific CSS
 import "./Home.css"
 
-var $ = require("jquery");
+// var $ = require("jquery");
 
 export default withAuth(
   class Home extends Component {
