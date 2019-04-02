@@ -24,6 +24,8 @@ module.exports = {
   // Scrape all method
   scrapeAll: function(req, res) {
 
+    var userID = req.query.userID;
+
     var urlInstagram = "https://www.instagram.com/wholesomememes/";
     var urlTumblr = "https://wholesome-memes-only.tumblr.com/";
     var urlPleated = "https://pleated-jeans.com/2019/03/25/wholesome-memes-5/";
@@ -115,9 +117,62 @@ module.exports = {
 
             }) // Ends forEach loop
         })
-        
+        .then(scrapedMemes => {
+            var dataToStore = {
+                userID: userID
+            }
+            
+            // check if user exists
+            db.Memes
+                .findOne({userID: userID}, {limit: 1})
+                .then(function (foundUser) {
+                    // Check if user exists
+                    if (foundUser) {
+                        console.log("User already exists")
+                    } else {
+                        console.log("User doesn't exist yet - adding!")
+                        // Create user if it doesnt exist in database
+                        db.Memes.create(dataToStore)
+                            .then(function () {})
+                            .catch(function (error) {
+                                return res.json(error);
+                            });
+                    }
+                    // Add all URLs to the user
+                    results.forEach(function(scrapedMemeURL) {
+                        // console.log(scrapedMemeURL);
+                        db.Memes.findOne(
+                            {
+                                'userID': userID,
+                                'imageURLs': {$elemMatch: {'imageURL': scrapedMemeURL}}
+                            })
+                            .then(function (foundURL) {
+                                if (foundURL) {
+                                    // console.log("URL already exists")
+                                } else {
+                                    // console.log("URL doesn't exist yet - adding!")
+                                    db.Memes.update(
+                                        {'userID': userID},
+                                        { $push:
+                                            {'imageURLs':
+                                                {
+                                                    'imageURL': scrapedMemeURL,
+                                                    'review': 'New'
+                                                },
+                                            }
+                                        },
+                                        function(err, result){
+
+                                        }
+                                    )
+                                }
+                            });
+                    })
+                })
+        })
         // Return extracted memes to DOM
         .then(() => {
+            console.log("db part finished")
             res.json(results);
             // console.log(results);
         })

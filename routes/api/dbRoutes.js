@@ -5,9 +5,12 @@ const router = require("express").Router();
 const dbController = require("../../controllers/dbController");
 
      ///   ROUTES   ///
+// Matches with "/api/memes/:userID/:review"
+router.route("/:userID/:review")
+  .get(dbController.findAllSaved)
+
 // Matches with "/api/memes"
 router.route("/")
-  .get(dbController.findAllSaved)
   .post(dbController.saveMeme);
 
 // Matches with "/api/memes/:id"

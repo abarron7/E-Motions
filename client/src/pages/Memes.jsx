@@ -15,8 +15,9 @@ import MemeContainer from "../components/MemeContainer/index";
 // import MemeImg from "../components/MemeImg/index";
 // import MemeNav from "../components/MemeNav/index";
 
-// Import API methods to trigger proxy routes
+// Import scrape and DB API methods to trigger proxy routes
 import API from "../utils/API";
+
 // Import page specific CSS
 // import "./Memes.css";
 // audio player
@@ -38,6 +39,7 @@ export default withAuth(class Memes extends Component {
       userinfo: null,
       ready: false,
       scrapedMemes: [],
+      haveScraped: false,
       currentMeme: {
         index: null,
         url: null,
@@ -56,7 +58,9 @@ export default withAuth(class Memes extends Component {
   async componentDidMount() {
     await this.checkAuthentication();
     // this.applyClaims();
-    this.scrapeMemes();
+    if (!this.state.haveScraped) {
+      this.scrapeMemes();
+    }
   }
 
   async componentDidUpdate() {
@@ -69,12 +73,24 @@ export default withAuth(class Memes extends Component {
   }
 
   scrapeMemes = () => {
-    API.scrapeMemes()
+    API.scrapeMemes(this.state.userinfo.sub)
     .then(res => {
-      this.setState({
-        scrapedMemes: res.data,
-      });
-      this.getCurrentMeme();
+
+      API.getAllSavedMemes({
+        userID: this.state.userinfo.sub,
+        review: 'New'
+      })
+      .then(res => {
+        this.setState({
+          scrapedMemes: res.data[0].imageURLs,
+          haveScraped: true
+        });
+        console.log(this.state.scrapedMemes);
+      })
+      .then(() => {
+        this.getCurrentMeme();
+      })
+      
     })
     .catch(err => {
       console.log(err);
@@ -82,6 +98,11 @@ export default withAuth(class Memes extends Component {
   };
 
   getCurrentMeme = () => {
+    // Scroll to top
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    //
+    console.log(this.state.scrapedMemes)
     var randomIndex = Math.floor(Math.random() * (this.state.scrapedMemes.length + 1));
     this.state.scrapedMemes.map((selectedMemeURL, index) => {
       if (index == randomIndex) {
@@ -89,7 +110,7 @@ export default withAuth(class Memes extends Component {
         this.setState({
           currentMeme: {
             index: index,
-            url: selectedMemeURL
+            url: selectedMemeURL.imageURL
           }
         })
         return;
@@ -98,9 +119,8 @@ export default withAuth(class Memes extends Component {
   };
 
 // saves the meme with the userID
-  handleSaveMeme = () => {
+  handleLikeMeme = () => {
     let id = this.state.userinfo.sub;
-    console.log(this.state.userinfo);
     API.saveMeme({
       userID: id,
       imageURL: this.state.currentMeme.url,
@@ -114,8 +134,9 @@ export default withAuth(class Memes extends Component {
   }
 
   handleDislikeMeme = () => {
+    let id = this.state.userinfo.sub;
     API.saveMeme({
-      userID: "123545",
+      userID: id,
       imageURL: this.state.currentMeme.url,
       review: "Disliked"
     })
@@ -140,7 +161,7 @@ export default withAuth(class Memes extends Component {
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
                 
                   {/* Function, try to not call it here */}
-                  {this.getCurrentMeme()}
+                  
                   {this.state.currentMeme.url != null &&
                     <MemeContainer
                       src={this.state.currentMeme.url}
