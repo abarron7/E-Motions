@@ -55,6 +55,25 @@ export default withAuth(
                     for you to enjoy!  Simply click on "New Memes" in the search bar
                     and start enjoying (and saving!) your favourite memes.
                   </p>
+                  <p>
+                    From a coding perspective, there are several things to point out 
+                    about this project.
+                    <ul>
+                    <br></br>
+                      <li>
+                        It contains a webscraper that chains several get requests from totally
+                        different websites into promises, and then sorts through each of them individually
+                        to extract the meme urls and then provide the user with a large pool of memes to enjoy.
+                      </li>
+                      <br></br>
+                      <li>
+                        It utilises the MERN stack to build an incredibly fast and responsive 
+                        website.  The use of remote authentication through the app 'OKTA' adds 
+                        a layer of security, and is integrated with a Mongo database
+                        to provide persistent data to store our favorite memes.
+                      </li>
+                    </ul>
+                  </p>
                 </div>
               )}
               {!this.state.authenticated && (

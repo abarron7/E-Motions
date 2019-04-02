@@ -20,14 +20,17 @@ var MemesSchema = new Schema({
         type: String,
         required: true
     },
-    imageURL: {
-        type: String,
-        required: true
-    },
-    review: {
-        type: String
-        // can be liked, disliked, or new
-    }
+    imageURLs: [
+        {
+            imageURL: {
+                type: String
+            },
+            // can be liked, disliked, or new
+            review: {
+                type: String
+            }
+        }
+    ]
     // uniqueID: {
     //     type: String,
     //     required: true
