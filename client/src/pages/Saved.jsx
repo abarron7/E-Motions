@@ -32,7 +32,6 @@ export default withAuth(class Saved extends Component {
     await this.checkAuthentication();
     this.applyClaims();
     // this.getMessages();
-    console.log(this.state.userinfo);
   }
   
   async componentDidUpdate() {

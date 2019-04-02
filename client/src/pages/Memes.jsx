@@ -106,7 +106,6 @@ export default withAuth(class Memes extends Component {
     var randomIndex = Math.floor(Math.random() * (this.state.scrapedMemes.length + 1));
     this.state.scrapedMemes.map((selectedMemeURL, index) => {
       if (index == randomIndex) {
-        console.log("index " + randomIndex + " is for " + selectedMemeURL);
         this.setState({
           currentMeme: {
             index: index,
