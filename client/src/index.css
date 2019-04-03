@@ -119,12 +119,15 @@ li>a:only-child:after {
 
     .toggle {
         display: block !important;
-        background-color: #222 !important;
         padding: 14px 20px !important;
         color: whitesmoke !important;
         font-size: 17px !important;
         text-decoration: none !important;
         border: none !important;
+        background: linear-gradient(to right, #03A9F4, #ff00ff) !important;
+        margin-bottom: 2px;
+        border-bottom: #000000;
+        border-bottom-width: 10px
     }
 
     .toggle:hover {
