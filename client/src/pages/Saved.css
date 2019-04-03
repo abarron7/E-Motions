@@ -1,0 +1,22 @@
+.container-saved {
+    width: 100%;
+    
+    column-count: 2;
+    -moz-column-count: 2;
+ -webkit-column-count: 2;
+         column-gap: 20px;
+    -moz-column-gap: 20px;
+ -webkit-column-gap: 20px;
+ 
+}
+
+@media all and (max-width: 600px) {
+    .container-saved {
+        column-count: 1;
+        -moz-column-count: 1;
+     -webkit-column-count: 1;
+             column-gap: 20px;
+        -moz-column-gap: 20px;
+     -webkit-column-gap: 20px;
+    }    
+}
