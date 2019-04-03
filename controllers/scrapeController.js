@@ -29,23 +29,29 @@ module.exports = {
     var urlInstagram = "https://www.instagram.com/wholesomememes/";
     var urlTumblr = "https://wholesome-memes-only.tumblr.com/";
     var urlPleated = "https://pleated-jeans.com/2019/03/25/wholesome-memes-5/";
+    var urlPleatedAnimal = "https://pleated-jeans.com/2017/04/21/29-wholesome-animal-memes/";
     var urlTwenty = "https://twentytwowords.com/wholesome-memes-that-are-so-emotionally-nourishing-the-rest-of-the-internet-will-seem-like-utter-rubbish/";
     var urlKISW = "https://kisw.radio.com/blogs/vicky-barcelona/wholesome-memes";
     var urlDroid = "https://www.memedroid.com/memes/tag/wholesome";
+    var urlPanda = "https://www.boredpanda.com/funny-wholesome-animal-memes/?utm_source=google&utm_medium=organic&utm_campaign=organic";
 
     var promises = [
     // doesnt work
         // axios.get(urlInstagram),
     // WORKS
-        axios.get(urlTumblr),
+        // axios.get(urlTumblr),
     // WORKS
-        axios.get(urlPleated),
+        // axios.get(urlPleated),
+    // WORKS
+        axios.get(urlPleatedAnimal),
     // doesnt work
         // axios.get(urlTwenty),
     // doesnt work
         // axios.get(urlKISW),
     // WORKS
-        axios.get(urlDroid),
+        // axios.get(urlDroid),
+    // doesnt work
+        // axios.get(urlPanda),
     ];
 
     // Create an empty object to store our data
@@ -85,6 +91,14 @@ module.exports = {
                         })
                         break;
 
+                    case urlPleatedAnimal:
+                        // console.log("Confirmed - Pleated");
+                        $(".size-full").each(function () {
+                            // imageURL
+                            results.push($(this).attr("src"));
+                        })
+                        break;
+
                     case urlTwenty:
                         // console.log("Confirmed - Twenty");
                         // $(".size-full").each(function () {
@@ -107,6 +121,15 @@ module.exports = {
                         $(".gallery-item").each(function () {
                             // imageURL
                             results.push($(this).find(".item-aux-container").children("a").children("img").attr("src"));
+                        })
+                        // console.log(results)
+                    break;
+
+                    case urlPanda:
+                        // console.log("Confirmed - Panda");
+                        $(".shareable-image-block").each(function () {
+                            // imageURL
+                            results.push($(this).find("picture").children("image-size-full").attr("src"));
                         })
                         // console.log(results)
                     break;
