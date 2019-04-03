@@ -13,35 +13,13 @@ module.exports = {
     findAllSaved: function(req, res) {
         console.log("firing this");
         console.log(req.params.userID);
-        console.log(req.params.review);
         // Accesses database, pass in query
-        db.Memes.find(
+        db.Memes
             // query
-            { 'userID': req.params.userID,
-            'imageURLs': {$elemMatch: {'review': req.params.review}}
-            })
-            // .then(dbMemesNew => {
-            //     console.log(JSON.parse(dbMemesNew));
-            //     // dbMemesNew
-            // })
-            // Returns all that match query
-            .then(dbMemesNew => {
-                console.log(JSON.stringify(dbMemesNew));
-                dbMemesNew.forEach(test => {
-                    test
-                });
-                console.log(dbMemesNew.length);
-                // console.log('new meme length is');
-                // console.log(JSON.stringify(dbMemesNew));
-                // console.log(dbMemesNew.length);
-                res.json(dbMemesNew);
-
-                // fs.writeFile("cheerio.txt", dbMemesNew, function(err) {
-                //     if (err) {
-                //         return console.log(err);
-                //     }
-                //     console.log("FS c written!");
-                // });
+            .find({ 'userID': req.params.userID })
+            // return object with id, imageurl and review
+            .then(dbMemes => {
+                res.json(dbMemes[0].imageURLs);
             })
             // Error handling
             .catch(err => res.status(422).json(err));

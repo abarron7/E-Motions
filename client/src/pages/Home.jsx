@@ -48,7 +48,7 @@ export default withAuth(
                     very best in wholesome goodness!  Simply click on "New Memes" in the search bar
                     and start enjoying your new favourite memes.
                   </p>
-                  <p>
+                  <div>
                     From a coding perspective, this site has the following:
                     <ul>
                       <br></br>
@@ -68,18 +68,16 @@ export default withAuth(
                       <br></br>
                       <li>
                         Webscraping: This site scrapes several different websites and chains the get requests together into
-                        a single promise, which is then sorted through to extract memes from each individual site.
+                        a single promise, which is then sorted to extract memes from each individual site.
                         What's cool here is that each site is designed differently, but each is extracted with 
                         minimal code written.
                       </li>
-                      <br></br>
-                      
                       <br></br>
                       <li>
                         MVC - this follows the MVC build design and folder structure.
                       </li>
                     </ul>
-                  </p>
+                  </div>
                 </div>
               )}
               {!this.state.authenticated && (
