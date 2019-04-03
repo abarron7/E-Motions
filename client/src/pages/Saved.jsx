@@ -1,111 +1,259 @@
-// Contains the React JSX Saved Memes page
+// Contains the React JSX New Memes page
 // Contains the functions and components/elements required for this page
 
+// Okta
 import { withAuth } from '@okta/okta-react';
+// React
 import React, { Component } from 'react';
-import { Button, Header, Icon, Message, Table } from 'semantic-ui-react';
+// Semantic UI
+import { Button, Header } from 'semantic-ui-react';
 import { checkAuthentication } from '../helpers';
-// import API from "../utils/API";
 
-// Import components
-import { List } from "../components/List/index";
-// import Meme from "../components/Meme/index";
+// Import reusable components utilized in this page
+// import { List } from "../components/List/index";
+import MemeContainer from "../components/MemeContainer/index";
+import MiniMemeImg from "../components/MiniMemeImg/index";
+// import MemeNav from "../components/MemeNav/index";
 
-import config from '../.samples.config';
+// Import scrape and DB API methods to trigger proxy routes
+import API from "../utils/API";
+
+// Import page specific CSS
+import "./Saved.css";
+// audio player
+import ReactAudioPlayer from "react-audio-player";
+import soundFile from "./wow.mp3";
+// var $ = require('jquery');
+
 
 export default withAuth(class Saved extends Component {
   constructor(props) {
     super(props);
+    // this.state = { authenticated: null, userinfo: null };
     this.checkAuthentication = checkAuthentication.bind(this);
+    this.login = this.login.bind(this);
 
-    this.state = { messages: null, failed: null };
+    // testing routes START
     this.state = {
+      // user login state
       authenticated: null,
       userinfo: null,
-      messages: null,
-      failed: null,
-      savedMemes: []
+      ready: false,
+      // local meme storage from db
+      allMemesFromDB: [],
+      currentMeme: {
+        index: null,
+        url: null,
+      }
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
   }
 
   async componentDidMount() {
     await this.checkAuthentication();
-    this.applyClaims();
-    // this.getMessages();
+    // Scrape memes
+    if (!this.state.haveScraped) {
+      this.scrapeMemes();
+    }
   }
-  
+
   async componentDidUpdate() {
     await this.checkAuthentication();
-    this.applyClaims();
   }
 
-  async applyClaims() {
-    if (this.state.userinfo && !this.state.claims) {
-      const claims = Object.entries(this.state.userinfo);
-      this.setState({ claims, ready: true });
-    }
+  async login() {
+    this.props.auth.login('/');
   }
 
-  async getMessages() {
-    if (!this.state.messages) {
-      try {
-        const accessToken = await this.props.auth.getAccessToken();
-        /* global fetch */
-        const response = await fetch(config.resourceServer.messagesUrl, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+  // call scrape meme, which will populate user db with all new memes
+  scrapeMemes = () => {
+    // scrape meme api call
+    API.scrapeMemes(this.state.userinfo.sub)
+    .then(res => {
+      // return all user's memes from db
+      API.getAllSavedMemes({
+        userID: this.state.userinfo.sub,
+        review: 'New'
+      })
+      .then(res => {
+        this.setState({
+          allMemesFromDB: res.data,
+          haveScraped: true
         });
+        console.log(this.state.allMemesFromDB);
+      })
+      .then(() => {
+        // this.getCurrentMeme();
+      })
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  };
 
-        if (response.status !== 200) {
-          this.setState({ failed: true });
-          return;
-        }
-
-        let index = 0;
-        const data = await response.json();
-        const messages = data.messages.map((message) => {
-          const date = new Date(message.date);
-          const day = date.toLocaleDateString();
-          const time = date.toLocaleTimeString();
-          index += 1;
-          return {
-            date: `${day} ${time}`,
-            text: message.text,
-            id: `message-${index}`,
-          };
-        });
-        this.setState({ messages, failed: false });
-      } catch (err) {
-        this.setState({ failed: true });
-        /* eslint-disable no-console */
-        console.error(err);
+  returnLikedMemes = () => {
+    // Find all new memes
+    var savedMemesURLs = [];
+    this.state.allMemesFromDB.forEach(function(result) {
+      if (result.review == "Liked") {
+        savedMemesURLs.push(result);
+      } else if (result.review == "Disliked") {
+        // console.log("This is disliked")
+      } else {
+        // console.log("is new");
       }
-    }
+    });
+    return savedMemesURLs;
+  }
+
+  handleOpenMeme = () => {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+
+    // create array holding all memes of not-'new' type
+    var allMemesFromDB = this.state.allMemesFromDB
+    var savedMemes = [];
+    allMemesFromDB.forEach(function(result) {
+      if (result.review != "New") {
+        savedMemes.push(result);
+        console.log("getCurrentMeme02");
+        console.log(savedMemes);
+      }
+    });
+    
+    console.log("getCurrentMeme03");
+    // choose random meme of 'new' type
+    savedMemes.map((selectedMeme, index) => {
+        this.setState({
+          currentMeme: {
+            index: index,
+            url: selectedMeme.imageURL
+          }
+        })
+        return;
+      })
+  };
+
+  // saves the meme with the userID
+  handleLikeMeme = () => {
+    // user id
+    let id = this.state.userinfo.sub;
+    // update the database
+    API.saveMeme({
+      userID: id,
+      imageURL: this.state.currentMeme.url,
+      review: "Liked"
+    })
+    .then(res => {
+        // store state as scoped variables
+        var allMemesFromDB = this.state.allMemesFromDB
+        var currentMemeURL = this.state.currentMeme.url;
+        // update the review status of the selected meme
+        allMemesFromDB.forEach((result, index) => {
+          if (result.imageURL == currentMemeURL) {
+            allMemesFromDB[index].review = "Liked"
+            // update the entire state with the one updated meme review
+            this.setState({
+              allMemesFromDB: allMemesFromDB
+            })
+          }
+        })
+    })
+    .then(() => {
+      // get next meme
+      // this.getCurrentMeme();
+    })
+    .catch(err => console.log(err));
+  }
+
+  handleDislikeMeme = () => {
+    // user id
+    let id = this.state.userinfo.sub;
+    // update the database
+    API.saveMeme({
+      userID: id,
+      imageURL: this.state.currentMeme.url,
+      review: "Disliked"
+    })
+    .then(res => {
+        // store state as scoped variables
+        var allMemesFromDB = this.state.allMemesFromDB
+        var currentMemeURL = this.state.currentMeme.url;
+        // update the review status of the selected meme
+        allMemesFromDB.forEach((result, index) => {
+          if (result.imageURL == currentMemeURL) {
+            allMemesFromDB[index].review = "Disliked"
+            // update the entire state with the one updated meme review
+            this.setState({
+              allMemesFromDB: allMemesFromDB
+            })
+          }
+        })
+    })
+    .then(() => {
+      // get next meme
+      // this.getCurrentMeme();
+    })
+    .catch(err => console.log(err));
   }
 
   render() {
-    const possibleErrors = [
-      'You\'ve downloaded one of our resource server examples, and it\'s running on port 8000.',
-      'Your resource server example is using the same Okta authorization server (issuer) that you have configured this React application to use.',
-    ];
     return (
-      <div>
-        <Header as="h1"><Icon name="mail outline" /> My Messages</Header>
-        <div class="body-memesfeed">
-        {this.state.authenticated !== null &&
+      <div className="body-memesfeed">
+        {this.state.authenticated !== null && (
           <div>
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
-            {this.state.authenticated &&
+            {this.state.authenticated &&(
               <div>
+                <ReactAudioPlayer src={soundFile} autoPlay />
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
-                {/* <p>Length is {this.state.scrapedMemes.length}</p> */}
-                {this.state.savedMemes.length ? (
+                {/* <p>Length is {this.state.allMemesFromDB.length}</p> */}
+                {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
+                
+                  {/* Function, try to not call it here */}
+                  
+                  {this.state.currentMeme.url != null &&
+                    <MemeContainer
+                      src={this.state.currentMeme.url}
+                      handleDislikeMeme={this.handleDislikeMeme}
+                      handleLikeMeme={this.handleLikeMeme}
+                    >
+                    </MemeContainer>
+                  }
+                  {this.state.currentMeme.url == null &&
+                    <React.Fragment>
+                      <div className="container-saved">
+                      {this.state.allMemesFromDB.map((meme, index) => {
+                        {if (meme.review == 'Liked')
+                          return <MiniMemeImg
+                            src={this.state.allMemesFromDB[index].imageURL}
+                          >
+                          </MiniMemeImg>
+                        return
+                        }
+                      })}
+                      </div>
+                    </React.Fragment>
+                  }
+
+                  <p>Current meme is {this.state.currentMeme.index}</p>
+                
+
+                <p>The array is currently {this.returnLikedMemes().length} memes long</p>
+                
+                {/* {this.state.allMemesFromDB.length ? (
                   <List>
-                    {this.state.savedMemes.map(meme => (
+                    {this.state.allMemesFromDB.map(meme => (
                       <React.Fragment>
-                        <div class="button-rate button-rate-up">YES</div>
-                        <div class="button-rate button-rate-down">NO</div>
+                        <Meme
+                          src={meme}
+                        />
+                        <div className="button-rate button-rate-up">YES</div>
+                        <div className="button-rate button-rate-down">NO</div>
                       </React.Fragment>
                     ))}
                   </List>
@@ -115,61 +263,31 @@ export default withAuth(class Saved extends Component {
                       <div></div>
                     </h4>
                   </div>
-                )}
+                )} */}
+
               </div>
-            }
-            {!this.state.authenticated &&
+            )}
+            {!this.state.authenticated && (
               <div>
-                <p>If you&lsquo;re viewing this page then you have successfully started this React application.</p>
-                <p>
-                  <span>This example shows you how to use the </span>
-                  <a href="https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react">Okta React Library</a>
-                  <span> and the </span>
-                  <a href="https://github.com/okta/okta-signin-widget">Okta Sign-In Widget</a>
-                  <span> to add the </span>
-                  <a href="https://developer.okta.com/authentication-guide/implementing-authentication/implicit">Implicit Flow</a>
-                  <span> to your application. This combination is useful when you want to leverage the features of the Sign-In Widget, </span>
-                  <span> and the authentication helper components from the <code>okta-react</code> module.</span>
-                </p>
-                <p>
-                  Once you have logged in you will be redirected through your authorization server (the issuer defined in config) to create a session for Single-Sign-On (SSO).
-                  After this you will be redirected back to the application with an ID token and access token.
-                  The tokens will be stored in local storage for future use.
-                </p>
                 <Button id="login-button" primary onClick={this.login}>Login</Button>
               </div>
-            }
-        </div>
-        }
+            )}
+            </div>
+        )}
       </div>
-        {this.state.failed === true && <Message error header="Failed to fetch messages.  Please verify the following:" list={possibleErrors} />}
-        {this.state.failed === null && <p>Fetching Messages..</p>}
-        {this.state.messages &&
-          <div>
-            <p>This component makes a GET request to the resource server example, which must be running at <code>localhost:8000/api/messages</code></p>
-            <p>
-              It attaches your current access token in the <code>Authorization</code> header on the request,
-              and the resource server will attempt to authenticate this access token.
-              If the token is valid the server will return a list of messages.  If the token is not valid
-              or the resource server is incorrectly configured, you will see a 401 <code>Unauthorized response</code>.
-            </p>
-            <p>
-              This route is protected with the <code>&lt;SecureRoute&gt;</code> component, which will
-              ensure that this page cannot be accessed until you have authenticated and have an access token in local storage.
-            </p>
-            <Table>
-              <thead>
-                <tr>
-                  <th>Date</th><th>Message</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.messages.map(message => <tr id={message.id} key={message.id}><td>{message.date}</td><td>{message.text}</td></tr>)}
-              </tbody>
-            </Table>
-          </div>
-        }
-      </div>
-    );
+      );
+    }
   }
-});
+);
+
+
+    // // Get a new meme
+    // this.state.allMemesFromDB.forEach(function(result) {
+    //   if (result.review == "New") {
+    //     console.log("This is liked");
+    //   } else if (result.review == "Disliked") {
+    //     console.log("This is disliked")
+    //   } else {
+    //     console.log("is new");
+    //   }
+    // });
