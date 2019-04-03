@@ -99,6 +99,11 @@ li>a:only-child:after {
 }
 
 @media all and (max-width : 768px) {
+    body {
+        height: 100% !important;
+        margin: 0; 
+        padding: 0;
+    }
 
     #logo {
         display: block !important;
