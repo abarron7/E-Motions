@@ -113,28 +113,46 @@ export default withAuth(class Memes extends Component {
   }
 
   getCurrentMeme = () => {
+
+    console.log("getCurrentMeme01");
     // Scroll to top
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 
-    var randomIndex = Math.floor(Math.random() * (this.state.allMemesFromDB.length + 1));
+    // create array holding all memes of 'new' type
     var allMemesFromDB = this.state.allMemesFromDB
     var newMemes = [];
     allMemesFromDB.forEach(function(result) {
       if (result.review == "New") {
-        newMemes.push(result)
+        newMemes.push(result);
+        console.log("getCurrentMeme02");
+        console.log(newMemes);
       }
     });
     
+    console.log("getCurrentMeme03");
+    // choose random meme of 'new' type
+    var randomIndex = Math.floor(Math.random() * (newMemes.length));
     newMemes.map((selectedMeme, index) => {
+      console.log("getCurrentMeme04");
       if (index == randomIndex) {
-        console.log("index " + randomIndex + " is for " + selectedMeme);
-        this.setState({
-          currentMeme: {
-            index: index,
-            url: selectedMeme.imageURL
-          }
-        })
+        console.log(index + " index " + randomIndex + " is for " + selectedMeme.imageURL);
+        console.log("getCurrentMeme05");
+        if (newMemes.length >= 1) {
+          this.setState({
+            currentMeme: {
+              index: index,
+              url: selectedMeme.imageURL
+            }
+          })
+        } else {
+          this.setState({
+            currentMeme: {
+              index: null,
+              url: null
+            }
+          })
+        }
         return;
       }
     })
@@ -144,19 +162,6 @@ export default withAuth(class Memes extends Component {
   handleLikeMeme = () => {
     // user id
     let id = this.state.userinfo.sub;
-    // store state as scoped variables
-    var allMemesFromDB = this.state.allMemesFromDB
-    var currentMemeURL = this.state.currentMeme.url;
-    // update the review status of the selected meme
-    allMemesFromDB.forEach(function(result, index) {
-      if (result.imageURL == currentMemeURL) {
-        allMemesFromDB[index].review = "Liked"
-      }
-    });
-    // update the state
-    this.setState({
-      allMemesFromDB: allMemesFromDB
-    })
     // update the database
     API.saveMeme({
       userID: id,
@@ -164,6 +169,22 @@ export default withAuth(class Memes extends Component {
       review: "Liked"
     })
     .then(res => {
+        // store state as scoped variables
+        var allMemesFromDB = this.state.allMemesFromDB
+        var currentMemeURL = this.state.currentMeme.url;
+        // update the review status of the selected meme
+        allMemesFromDB.forEach((result, index) => {
+          if (result.imageURL == currentMemeURL) {
+            allMemesFromDB[index].review = "Liked"
+            // update the entire state with the one updated meme review
+            this.setState({
+              allMemesFromDB: allMemesFromDB
+            })
+          }
+        })
+    })
+    .then(() => {
+      // get next meme
       this.getCurrentMeme();
     })
     .catch(err => console.log(err));
@@ -172,19 +193,6 @@ export default withAuth(class Memes extends Component {
   handleDislikeMeme = () => {
     // user id
     let id = this.state.userinfo.sub;
-    // store state as scoped variables
-    var allMemesFromDB = this.state.allMemesFromDB
-    var currentMemeURL = this.state.currentMeme.url;
-    // update the review status of the selected meme
-    allMemesFromDB.forEach(function(result, index) {
-      if (result.imageURL == currentMemeURL) {
-        allMemesFromDB[index].review = "Disliked"
-      }
-    });
-    // update the state
-    this.setState({
-      allMemesFromDB: allMemesFromDB
-    })
     // update the database
     API.saveMeme({
       userID: id,
@@ -192,6 +200,22 @@ export default withAuth(class Memes extends Component {
       review: "Disliked"
     })
     .then(res => {
+        // store state as scoped variables
+        var allMemesFromDB = this.state.allMemesFromDB
+        var currentMemeURL = this.state.currentMeme.url;
+        // update the review status of the selected meme
+        allMemesFromDB.forEach((result, index) => {
+          if (result.imageURL == currentMemeURL) {
+            allMemesFromDB[index].review = "Disliked"
+            // update the entire state with the one updated meme review
+            this.setState({
+              allMemesFromDB: allMemesFromDB
+            })
+          }
+        })
+    })
+    .then(() => {
+      // get next meme
       this.getCurrentMeme();
     })
     .catch(err => console.log(err));
@@ -219,6 +243,14 @@ export default withAuth(class Memes extends Component {
                       handleLikeMeme={this.handleLikeMeme}
                     >
                     </MemeContainer>
+                  }
+                  {this.state.currentMeme.url == null &&
+                    <React.Fragment>
+                      <div>
+                        There are no new memes.
+                        Go checkout your saved memes.
+                      </div>
+                    </React.Fragment>
                   }
 
                   <p>Current meme is {this.state.currentMeme.index}</p>
