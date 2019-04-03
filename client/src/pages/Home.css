@@ -1,5 +1,58 @@
-.login-button {
-    position: fixed;
-    top: 30%;
-    right: 30%;
+#login-button {
+
+    background: linear-gradient(to right, #03A9F4, #ff00ff) !important;
 }
+
+
+audio::-webkit-media-controls-panel{
+    color: whitesmoke !important;
+    background: linear-gradient(to right, #03A9F4, #ff00ff) !important;
+}
+
+audio::-webkit-media-controls-mute-button{
+    color: whitesmoke !important;
+    border-radius: 0px;
+}
+
+audio::-webkit-media-controls-play-button{
+  height: 30px;
+  border-radius: 0px;
+  
+}
+audio::-webkit-media-controls-play-button:hover{
+  height: 30px;
+
+}
+
+audio::-webkit-media-controls-timeline-container{
+
+}
+
+audio::-webkit-media-controls-current-time-display{
+   
+}
+
+audio::-webkit-media-controls-time-remaining-display{
+    
+}
+
+audio::-webkit-media-controls-timeline{
+    
+}
+
+audio::-webkit-media-controls-volume-slider-container{
+    
+}
+
+audio::-webkit-media-controls-volume-slider{
+    
+}
+
+audio::-webkit-media-controls-seek-back-button{
+    
+}
+
+audio::-webkit-media-controls-seek-forward-button{
+    
+}
+
