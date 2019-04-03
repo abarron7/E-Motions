@@ -1,193 +1,213 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    
-    background-color: #69ccdf;
-  }
-  .ui.menu {
-    background: #000000;
-  }
-  .toggle,
-  [id^=drop] {
-    display: none;
-  }
-  
-  nav:after {
-    content:"";
-    display:table;
-    clear:both;
-  }
-  
-  nav ul {
-    float: right;
-    padding:0;
-    margin:0;
-    list-style: none;
-      position: relative;
-      color: whitesmoke;
-    }
-    
-  nav ul li {
-    margin: 0px;
-    display:inline-block;
-    float: left;
-    background-color: #222;
-    }
-  
-  nav a {
-    display:block;
-    padding:14px 20px;	
-    color:whitesmoke;
-    font-size:17px;
-    text-decoration:none;
-  }
-  
-  nav ul li ul li:hover { 
-      color:rgb(15, 126, 255);
-      text-decoration: none;
-  }
-  
-  nav a:hover { 
-      text-decoration: none;
-  }
-  
-  nav ul ul {
-    display: none;
-    position: absolute; 
-    top: 60px; 
-  }
-    
-  nav ul li:hover > ul {
-    display:inherit;
-  }
-    
-  nav ul ul li {
-    width:170px;
-    float:none;
-    display:list-item;
-    position: relative;
-  }
-  
-  nav ul ul ul li {
-    position: relative;
-    top:-60px;
-    left:170px; 
-  }
-  
-  li > a:after { content:  ' +'; }
-  li > a:only-child:after { content: ''; }
-  
-  @media all and (max-width : 768px) {
-  
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: sans-serif !important;
+
+    background-color: #69ccdf !important;
+}
+
+.ui.menu {
+    background: #000000 !important;
+}
+#login-button {
+  cursor: pointer;
+}
+#logout-button {
+  cursor: pointer;
+}
+
+.toggle,
+[id^=drop] {
+    display: none !important;
+}
+
+nav:after {
+    content: "" !important;
+    display: table !important;
+    clear: both !important;
+}
+
+nav ul {
+    float: right !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+    position: relative !important;
+    color: whitesmoke !important;
+    background: linear-gradient(to right, #03A9F4, #ff00ff) !important;
+}
+
+nav ul li {
+    margin: 0px !important;
+    display: inline-block !important;
+    float: left !important;
+}
+nav ul li:first-child{
+  border-radius: 25px 0px 0px 25px;
+}
+nav ul li:last-child {
+  border-radius: 25px 0px 25px 25px;
+}
+nav ul li:nth-child(5) {
+  border-radius: 0px 0px 10px 0px;
+}
+nav a {
+    display: block !important;
+    padding: 14px 20px !important;
+    color: whitesmoke !important;
+    font-size: 17px !important;
+    text-decoration: none !important;
+}
+
+nav ul li ul li:hover {
+    text-decoration: none !important;
+}
+
+nav a:hover {
+    text-decoration: none !important;
+}
+
+nav ul ul {
+    display: none !important;
+    position: absolute !important;
+    top: 60px !important;
+}
+
+nav ul li:hover>ul {
+    display: inherit !important;
+}
+
+nav ul ul li {
+    width: 170px !important;
+    float: none !important;
+    display: list-item !important;
+    position: relative !important;
+}
+
+nav ul ul ul li {
+    position: relative !important;
+    top: -60px !important;
+    left: 170px !important;
+}
+
+li>a:after {
+    content: ' +' !important;
+}
+
+li>a:only-child:after {
+    content: '' !important;
+}
+
+@media all and (max-width : 768px) {
+
     #logo {
-      display: block;
-      padding: 0;
-      width: 100%;
-      text-align: center;
-      float: none;
+        display: block !important;
+        padding: 0 !important;
+        width: 100% !important;
+        text-align: center !important;
+        float: none !important;
     }
-  
+
     nav {
-      margin: 0;
+        margin: 0 !important;
     }
-  
-    .toggle + a,
+
+    .toggle+a,
     .menu {
-      display: none;
+        display: none !important;
     }
-  
+
     .toggle {
-      display: block;
-      background-color: #222;
-      padding:14px 20px;	
-      color:whitesmoke;
-      font-size:17px;
-      text-decoration:none;
-      border:none;
+        display: block !important;
+        background-color: #222 !important;
+        padding: 14px 20px !important;
+        color: whitesmoke !important;
+        font-size: 17px !important;
+        text-decoration: none !important;
+        border: none !important;
     }
-  
+
     .toggle:hover {
-      background-color: #000000;
+        background-color: #000000 !important;
     }
-  
-    [id^=drop]:checked + ul {
-      display: block;
+
+    [id^=drop]:checked+ul {
+        display: block !important;
     }
-  
+
     nav ul li {
-      display: block;
-      width: 100%;
-      }
-  
+        display: block !important;
+        width: 100% !important;
+    }
+
     nav ul ul .toggle,
     nav ul ul a {
-      padding: 0 40px;
+        padding: 0 40px !important;
     }
-  
+
     nav ul ul ul a {
-      padding: 0 80px;
+        padding: 0 80px !important;
     }
-  
+
     nav a:hover,
-     nav ul ul ul a {
-      background-color: #000000;
+    nav ul ul ul a {
+        background-color: #000000 !important;
     }
-    
+
     nav ul li ul li .toggle,
     nav ul ul a,
-    nav ul ul ul a{
-      padding:14px 20px;	
-      color:whitesmoke;
-      font-size:17px; 
+    nav ul ul ul a {
+        padding: 14px 20px !important;
+        color: whitesmoke !important;
+        font-size: 17px !important;
     }
-    
-    
+
+
     nav ul li ul li .toggle,
     nav ul ul a {
-      background-color: #212121; 
+        background-color: #212121 !important;
     }
-  
+
     nav ul ul {
-      float: none;
-      position:static;
-      color: whitesmoke;
+        float: none !important;
+        position: static !important;
+        color: whitesmoke !important;
     }
-  
-    nav ul ul li:hover > ul,
-    nav ul li:hover > ul {
-      display: none;
+
+    nav ul ul li:hover>ul,
+    nav ul li:hover>ul {
+        display: none !important;
     }
-  
+
     nav ul ul li {
-      display: block;
-      width: 100%;
+        display: block !important;
+        width: 100% !important;
     }
-  
+
     nav ul ul ul li {
-      position: static;
-  
+        position: static !important;
+
     }
-  
-  }
-  
-  @media all and (max-width : 330px) {
-  
+
+}
+
+@media all and (max-width : 330px) {
+
     nav ul li {
-      display:block;
-      width: 94%;
+        display: block !important;
+        width: 94% !important;
     }
-  
-  }
-  
-  ::placeholder {
-      color: whitesmoke;
-  }
-  
-  input::placeholder {
-      color: whitesmoke;
-  }
-  .form-group {
-      color: whitesmoke;
-  }
-  
+
+}
+
+::placeholder {
+    color: whitesmoke !important;
+}
+
+input::placeholder {
+    color: whitesmoke !important;
+}
+
+.form-group {
+    color: whitesmoke !important;
+}

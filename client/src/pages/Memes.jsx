@@ -21,7 +21,6 @@ import API from "../utils/API";
 // Import page specific CSS
 // import "./Memes.css";
 // audio player
-import ReactAudioPlayer from "react-audio-player";
 import soundFile from "./wow.mp3";
 // var $ = require('jquery');
 
@@ -229,7 +228,7 @@ export default withAuth(class Memes extends Component {
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
             {this.state.authenticated &&(
               <div>
-                <ReactAudioPlayer src={soundFile} autoPlay />
+                <audio src={soundFile} autoPlay />
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.allMemesFromDB.length}</p> */}
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
