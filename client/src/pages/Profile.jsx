@@ -28,7 +28,6 @@ export default withAuth(class Profile extends Component {
     if (this.state.userinfo && !this.state.claims) {
       const claims = Object.entries(this.state.userinfo);
       this.setState({ claims, ready: true });
-      console.log(this.state.userinfo.sub)
     }
   }
 
@@ -53,7 +52,6 @@ export default withAuth(class Profile extends Component {
                 const claimName = claimEntry[0];
                 const claimValue = claimEntry[1];
                 const claimId = `claim-${claimName}`;
-                console.log(claimEntry.sub)
                 return <tr key={claimName}><td>{claimName}</td><td id={claimId}>{claimValue}</td></tr>;
               })}
             </tbody>
