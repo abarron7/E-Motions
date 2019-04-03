@@ -43,34 +43,40 @@ export default withAuth(
                 <div>
                   <p>Welcome back, {this.state.userinfo.name}!</p>
                   <p>
-                    You have successfully authenticated against your Okta org,
-                    and have been redirected back to this application. You now
-                    have an ID token and access token in local storage. Visit
-                    the <a href="/profile">My Profile</a> page to take a look
-                    inside the ID token.
+                    This site is here to help you relax.  It's a Wholesome Meme
+                    site that scrapes from all over the internets, and brings you the
+                    very best in wholesome goodness!  Simply click on "New Memes" in the search bar
+                    and start enjoying your new favourite memes.
                   </p>
                   <p>
-                    This site allows you to browse through many Wholesome Memes.
-                    These memes were scraped from multiple sites, and are now ready
-                    for you to enjoy!  Simply click on "New Memes" in the search bar
-                    and start enjoying (and saving!) your favourite memes.
-                  </p>
-                  <p>
-                    From a coding perspective, there are several things to point out 
-                    about this project.
+                    From a coding perspective, this site has the following:
                     <ul>
-                    <br></br>
+                      <br></br>
                       <li>
-                        It contains a webscraper that chains several get requests from totally
-                        different websites into promises, and then sorts through each of them individually
-                        to extract the meme urls and then provide the user with a large pool of memes to enjoy.
+                        MERN stack: This site utilizes the MERN stack to build an incredibly fast and responsive 
+                        website.
                       </li>
                       <br></br>
                       <li>
-                        It utilises the MERN stack to build an incredibly fast and responsive 
-                        website.  The use of remote authentication through the app 'OKTA' adds 
-                        a layer of security, and is integrated with a Mongo database
-                        to provide persistent data to store our favorite memes.
+                        OKTA: The use of remote authentication through the app 'OKTA' allows for persistent 
+                        data and an extra layer of security.
+                      </li>
+                      <br></br>
+                      <li>
+                        MongoDB: The site utilizes a Mongo database to provide the persistent data.
+                      </li>
+                      <br></br>
+                      <li>
+                        Webscraping: This site scrapes several different websites and chains the get requests together into
+                        a single promise, which is then sorted through to extract memes from each individual site.
+                        What's cool here is that each site is designed differently, but each is extracted with 
+                        minimal code written.
+                      </li>
+                      <br></br>
+                      
+                      <br></br>
+                      <li>
+                        MVC - this follows the MVC build design and folder structure.
                       </li>
                     </ul>
                   </p>
