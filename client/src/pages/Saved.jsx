@@ -95,11 +95,11 @@ export default withAuth(class Saved extends Component {
     });
   };
 
-  returnsavedMemes = () => {
+  returnLikedMemes = () => {
     // Find all new memes
     var savedMemesURLs = [];
     this.state.allMemesFromDB.forEach(function(result) {
-      if (result.review != "New") {
+      if (result.review == "Liked") {
         savedMemesURLs.push(result);
       } else if (result.review == "Disliked") {
         // console.log("This is disliked")
@@ -227,12 +227,15 @@ export default withAuth(class Saved extends Component {
                   {this.state.currentMeme.url == null &&
                     <React.Fragment>
                       <div className="container-saved">
-                      {this.state.allMemesFromDB.map((meme, index) => (
-                        <MiniMemeImg
-                          src={this.state.allMemesFromDB[index].imageURL}
-                        >
-                        </MiniMemeImg>
-                      ))}
+                      {this.state.allMemesFromDB.map((meme, index) => {
+                        {if (meme.review == 'Liked')
+                          return <MiniMemeImg
+                            src={this.state.allMemesFromDB[index].imageURL}
+                          >
+                          </MiniMemeImg>
+                        return
+                        }
+                      })}
                       </div>
                     </React.Fragment>
                   }
@@ -240,7 +243,7 @@ export default withAuth(class Saved extends Component {
                   <p>Current meme is {this.state.currentMeme.index}</p>
                 
 
-                <p>The array is currently {this.returnsavedMemes().length} memes long</p>
+                <p>The array is currently {this.returnLikedMemes().length} memes long</p>
                 
                 {/* {this.state.allMemesFromDB.length ? (
                   <List>

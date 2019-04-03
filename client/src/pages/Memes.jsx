@@ -244,7 +244,7 @@ export default withAuth(class Memes extends Component {
                     >
                     </MemeContainer>
                   }
-                  {this.state.currentMeme.url == null &&
+                  {this.returnNewMemes().length == 0 &&
                     <React.Fragment>
                       <div>
                         There are no new memes.
