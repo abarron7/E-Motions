@@ -32,12 +32,12 @@
     "if-env": "^1.0.4",
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.4.21",
     "morgan": "^1.9.1",
     "path": "^0.12.7",
     "react": "^16.8.6",
-    "react-dom": "^16.2.0",
+    "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8"
+    "react-scripts": "^2.1.8"
   }
 }
