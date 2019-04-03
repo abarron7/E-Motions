@@ -82,7 +82,7 @@ export default withAuth(class Memes extends Component {
       })
       .then(res => {
         this.setState({
-          scrapedMemes: res.data[0].imageURLs,
+          scrapedMemes: res.data,
           haveScraped: true
         });
         console.log(this.state.scrapedMemes);
@@ -104,13 +104,13 @@ export default withAuth(class Memes extends Component {
     //
     console.log(this.state.scrapedMemes)
     var randomIndex = Math.floor(Math.random() * (this.state.scrapedMemes.length + 1));
-    this.state.scrapedMemes.map((selectedMemeURL, index) => {
+    this.state.scrapedMemes.map((selectedMeme, index) => {
       if (index == randomIndex) {
-        console.log("index " + randomIndex + " is for " + selectedMemeURL);
+        console.log("index " + randomIndex + " is for " + selectedMeme);
         this.setState({
           currentMeme: {
             index: index,
-            url: selectedMemeURL.imageURL
+            url: selectedMeme.imageURL
           }
         })
         return;
