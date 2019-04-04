@@ -41,15 +41,15 @@ module.exports = {
     // WORKS
         axios.get(urlTumblr),
     // WORKS
-        axios.get(urlPleated),
+        // axios.get(urlPleated),
     // WORKS
-        axios.get(urlPleatedAnimal),
+        // axios.get(urlPleatedAnimal),
     // doesnt work
         // axios.get(urlTwenty),
     // doesnt work
         // axios.get(urlKISW),
     // WORKS
-        axios.get(urlDroid),
+        // axios.get(urlDroid),
     // doesnt work
         // axios.get(urlPanda),
     ];
