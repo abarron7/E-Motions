@@ -1,18 +1,4 @@
-.body-memesfeed {
-
-}
-
-.button-rate {
-    width: fit-content;
-    bottom: 45%;
-}
-
-.button-rate-up {
-    position: fixed;
-    left: 10%;
-}
-
-.button-rate-down {
-    position: fixed;
-    right: 10%;
-}
+.page-text {
+    /* font-weight: bold; */
+    text-align: center;
+    }

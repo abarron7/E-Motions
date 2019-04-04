@@ -1,0 +1,21 @@
+/* wrapping around component */
+.page-body {
+    background-color: rgb(255, 255, 255, 0.72);
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 60px;
+    padding-bottom: 50px;
+}
+  
+.page-text {
+    /* font-weight: bold; */
+    font-size: 1.5rem;
+}
+
+li {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+  }
+  
+  

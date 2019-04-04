@@ -19,9 +19,11 @@ import MiniMemeImg from "../components/MiniMemeImg/index";
 import API from "../utils/API";
 
 // Import page specific CSS
+import "./CommonCSS.css";
 import "./Saved.css";
+
 // audio player
-import soundFile from "./wow.mp3";
+import soundFile from '../assets/audio/wow.mp3';
 // var $ = require('jquery');
 
 
@@ -66,6 +68,21 @@ export default withAuth(class Saved extends Component {
 
   async login() {
     this.props.auth.login('/');
+  }
+
+  returnSavedMemes = () => {
+    // Find all new memes
+    var savedMemesURLs = [];
+    this.state.allMemesFromDB.forEach(function(result) {
+      if (result.review == "Liked") {
+        savedMemesURLs.push(result);
+      } else if (result.review == "Disliked") {
+        // console.log("This is disliked")
+      } else {
+        // console.log("is new");
+      }
+    });
+    return savedMemesURLs;
   }
 
   // call scrape meme, which will populate user db with all new memes
@@ -137,6 +154,24 @@ export default withAuth(class Saved extends Component {
       })
   };
 
+  handleSetCurrentMeme = (url) => {
+      this.setState({
+        currentMeme: {
+          index: null,
+          url: url
+        }
+      })
+  }
+
+  handleUnsetCurrentMeme = () => {
+    this.setState({
+      currentMeme: {
+        index: null,
+        url: null
+      }
+    })
+}
+
   // saves the meme with the userID
   handleLikeMeme = () => {
     // user id
@@ -202,7 +237,7 @@ export default withAuth(class Saved extends Component {
 
   render() {
     return (
-      <div className="body-memesfeed">
+      <div className={`${this.returnSavedMemes().length == 0 ? "page-body" : ""}`}>
         {this.state.authenticated !== null && (
           <div>
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
@@ -220,6 +255,7 @@ export default withAuth(class Saved extends Component {
                       src={this.state.currentMeme.url}
                       handleDislikeMeme={this.handleDislikeMeme}
                       handleLikeMeme={this.handleLikeMeme}
+                      
                     >
                     </MemeContainer>
                   }
@@ -230,6 +266,7 @@ export default withAuth(class Saved extends Component {
                         {if (meme.review == 'Liked')
                           return <MiniMemeImg
                             src={this.state.allMemesFromDB[index].imageURL}
+                            handleUnsetCurrentMeme={this.handleUnsetCurrentMeme}
                           >
                           </MiniMemeImg>
                         return
@@ -238,11 +275,19 @@ export default withAuth(class Saved extends Component {
                       </div>
                     </React.Fragment>
                   }
-
+                  {this.returnSavedMemes().length == 0 &&
+                    <React.Fragment>
+                      <div className="page-text">
+                        <p>Unless they're still loading, it looks like you haven't liked any memes yet...</p>
+                        <p>Feel free to start browsing and saving memes by clicking <a href="/memes">here</a>.</p>
+                      </div>
+                    </React.Fragment>
+                  }
+{/* 
                   <p>Current meme is {this.state.currentMeme.index}</p>
                 
 
-                <p>The array is currently {this.returnLikedMemes().length} memes long</p>
+                <p>The array is currently {this.returnLikedMemes().length} memes long</p> */}
                 
                 {/* {this.state.allMemesFromDB.length ? (
                   <List>
