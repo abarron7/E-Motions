@@ -19,10 +19,10 @@ import MemeContainer from "../components/MemeContainer/index";
 import API from "../utils/API";
 
 // Import page specific CSS
+// audio 
+import soundFile from "./wow.mp3";
 import "./CommonCSS.css";
 import "./Memes.css";
-// audio player
-import soundFile from '../assets/audio/wow.mp3';
 // var $ = require('jquery');
 
 
