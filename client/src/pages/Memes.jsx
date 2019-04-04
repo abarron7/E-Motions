@@ -20,7 +20,7 @@ import API from "../utils/API";
 
 // Import page specific CSS
 // audio 
-import soundFile from "./wow.mp3";
+import soundFile from '../assets/audio/wow.mp3';
 import "./CommonCSS.css";
 import "./Memes.css";
 // var $ = require('jquery');

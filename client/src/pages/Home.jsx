@@ -10,7 +10,7 @@ import { checkAuthentication } from "../helpers";
 // Import page specific CSS
 import "./CommonCSS.css";
 import "./Home.css";
-import soundFile from "./Happy.mp3";
+import soundFile from '../assets/audio/Happy.mp3';
 // var $ = require("jquery");
 
 export default withAuth(
