@@ -19,9 +19,10 @@ import MemeContainer from "../components/MemeContainer/index";
 import API from "../utils/API";
 
 // Import page specific CSS
-// import "./Memes.css";
 // audio 
 import soundFile from "./wow.mp3";
+import "./CommonCSS.css";
+import "./Memes.css";
 // var $ = require('jquery');
 
 
@@ -222,7 +223,7 @@ export default withAuth(class Memes extends Component {
 
   render() {
     return (
-      <div className="body-memesfeed">
+      <div className={`${this.returnNewMemes().length == 0 ? "page-body" : ""}`}>
         {this.state.authenticated !== null && (
           <div>
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
@@ -235,7 +236,8 @@ export default withAuth(class Memes extends Component {
                 
                   {/* Function, try to not call it here */}
                   
-                  {this.state.currentMeme.url != null &&
+                  {/* {this.state.currentMeme.url != null && */}
+                  {this.returnNewMemes().length != 0 &&
                     <MemeContainer
                       src={this.state.currentMeme.url}
                       handleDislikeMeme={this.handleDislikeMeme}
@@ -245,17 +247,16 @@ export default withAuth(class Memes extends Component {
                   }
                   {this.returnNewMemes().length == 0 &&
                     <React.Fragment>
-                      <div>
-                        There are no new memes.
-                        Go checkout your saved memes.
+                      <div className="page-text">
+                        <p>Wow, you've reviewed all the memes we have for now...</p>
+                        <p>You must feel so wholesome right now!</p>
+                        <p>Feel free to browse all your saved memes by clicking <a href="/saved">here</a>.</p>
                       </div>
                     </React.Fragment>
                   }
 
-                  <p>Current meme is {this.state.currentMeme.index}</p>
-                
-
-                <p>The array is currently {this.returnNewMemes().length} memes long</p>
+                  {/* <p>Current meme is {this.state.currentMeme.index}</p>
+                  <p>The array is currently {this.returnNewMemes().length} memes long</p> */}
                 
                 {/* {this.state.allMemesFromDB.length ? (
                   <List>

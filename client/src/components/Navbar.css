@@ -1,0 +1,26 @@
+/* Remove gap between menu button and menu items */
+.toggle {
+    margin-bottom: 0px !important;
+}
+
+/* Indent items in dropdown responsive menu */
+.responsive-menu-item {
+    margin-left: 15px;
+}
+
+
+
+/* Soft edges around responsive menu */
+.menu {
+    opacity: 0.92;
+    /* border-radius: 10px; */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/* Remove soft edges in mobile view */
+@media (max-width: 768px) {
+    .menu {
+        border-top-left-radius: 0px;
+    }
+}

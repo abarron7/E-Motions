@@ -14,7 +14,7 @@ class MiniMemeImg extends Component {
             className="miniMemeImage"
             src={this.props.src}
             alt="meme"
-            onClick={() => alert("you clicked me")}
+            onClick={() => {this.props.handleUnsetCurrentMeme()}}
             // onClick={() => this.props.handleOpenMeme()}
           />
         {/* </div> */}

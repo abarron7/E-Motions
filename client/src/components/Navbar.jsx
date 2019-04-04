@@ -3,6 +3,8 @@ import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { checkAuthentication } from '../helpers';
 // import { Icon } from "semantic-ui-react";
+import "./Navbar.css";
+
 
 export default withAuth(class Navbar extends Component {
   constructor(props) {
@@ -49,16 +51,16 @@ export default withAuth(class Navbar extends Component {
        */}
        <nav> 
        <div id="logo" src="/react.svg"></div>
- 
-       <label htmlFor="drop" className="toggle">Menu</label>
+       <label for="drop" className="toggle">Menu</label>
        <input type="checkbox" id="drop" />
-        <ul className="menu">
-          <li>{this.state.authenticated === true && <a id="home-button" as="a" href="/">Home</a>}</li>  
-          <li>{this.state.authenticated === true && <a id="saved-button" as="a" href="/saved">Saved</a>}</li>  
-          <li>{this.state.authenticated === true && <a id="memes-button" as="a" href="/memes">New Memes</a>}</li>
-          <li>{this.state.authenticated === true && <a id="profile-button" as="a" href="/profile">Profile</a>}</li>
-          <li>{this.state.authenticated === true && <a id="logout-button" as="a" onClick={this.logout}>Logout</a>}</li>
-          <li>{this.state.authenticated === false && <a id="login-button" as="a" onClick={this.login}>Login</a>}</li>
+        <ul class="menu">
+          <li>{this.state.authenticated === true && <a id="home-button" as="a" className="responsive-menu-item" href="/">Home</a>}</li>  
+          <li>{this.state.authenticated === true && <a id="memes-button" as="a" className="responsive-menu-item" href="/memes">New Memes</a>}</li>
+          <li>{this.state.authenticated === true && <a id="saved-button" as="a" className="responsive-menu-item" href="/saved">Saved Memes</a>}</li>  
+          {/* <li>{this.state.authenticated === true && <a id="profile-button" as="a" className="responsive-menu-item" href="/profile">Profile</a>}</li> */}
+          <li>{this.state.authenticated === true && <a id="about-button" as="a" className="responsive-menu-item" href="/about">About</a>}</li>
+          <li>{this.state.authenticated === true && <a id="logout-button" as="a" className="responsive-menu-item" onClick={this.logout}>Logout</a>}</li>
+          <li>{this.state.authenticated === false && <a id="login-button" as="a" className="responsive-menu-item" onClick={this.login}>Login</a>}</li>
         </ul>
       </nav>
      </div>
