@@ -43,7 +43,7 @@ module.exports = {
     // WORKS
         // axios.get(urlPleated),
     // WORKS
-        // axios.get(urlPleatedAnimal),
+        axios.get(urlPleatedAnimal),
     // doesnt work
         // axios.get(urlTwenty),
     // doesnt work

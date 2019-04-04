@@ -21,10 +21,12 @@ import config from './.samples.config';
 
 import BackgroundVideo from './components/BackgroundVideo';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './pages/Home';
 import Memes from './pages/Memes';
 import Saved from './pages/Saved';
 import Profile from './pages/Profile';
+import About from './pages/About';
 
 class App extends Component {
   render() {
@@ -37,13 +39,15 @@ class App extends Component {
         >
          <Navbar />
          <BackgroundVideo />
-          <Container text style={{ marginTop: '7em' }}>
+          <Container text style={{ marginTop: '7em', minHeight: 'calc(100vh - 25px)'}}>
             <Route path="/" exact component={Home} />
             <Route path="/implicit/callback" component={ImplicitCallback} />
-            <SecureRoute path="/saved" component={Saved} />
             <SecureRoute path="/memes" component={Memes} />
+            <SecureRoute path="/saved" component={Saved} />
             <SecureRoute path="/profile" component={Profile} />
+            <SecureRoute path="/about" component={About} />
           </Container>
+          {/* <Footer></Footer> */}
         </Security>
       </Router>
     );

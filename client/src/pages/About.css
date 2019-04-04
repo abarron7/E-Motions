@@ -1,0 +1,17 @@
+.page-text {
+    text-align: left;
+}
+
+.about-member-links-div {
+    display: inline-block;
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+    margin-left: 20px;
+}
+
+.header {
+    text-align: center;
+}
