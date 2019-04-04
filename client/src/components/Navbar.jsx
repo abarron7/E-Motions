@@ -2,7 +2,7 @@
 import { withAuth } from '@okta/okta-react';
 import React, { Component } from 'react';
 import { checkAuthentication } from '../helpers';
-import { Icon } from "semantic-ui-react";
+// import { Icon } from "semantic-ui-react";
 
 export default withAuth(class Navbar extends Component {
   constructor(props) {
@@ -50,9 +50,9 @@ export default withAuth(class Navbar extends Component {
        <nav> 
        <div id="logo" src="/react.svg"></div>
  
-       <label for="drop" class="toggle">Menu</label>
+       <label htmlFor="drop" className="toggle">Menu</label>
        <input type="checkbox" id="drop" />
-        <ul class="menu">
+        <ul className="menu">
           <li>{this.state.authenticated === true && <a id="home-button" as="a" href="/">Home</a>}</li>  
           <li>{this.state.authenticated === true && <a id="saved-button" as="a" href="/saved">Saved</a>}</li>  
           <li>{this.state.authenticated === true && <a id="memes-button" as="a" href="/memes">New Memes</a>}</li>
