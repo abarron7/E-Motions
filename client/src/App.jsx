@@ -43,6 +43,7 @@ class App extends Component {
             <Route path="/" exact component={Home} />
             <Route path="/implicit/callback" component={ImplicitCallback} />
             <SecureRoute path="/memes" component={Memes} />
+            {/* <SecureRoute path="/callback" component={Home} /> */}
             <SecureRoute path="/saved" component={Saved} />
             <SecureRoute path="/profile" component={Profile} />
             <SecureRoute path="/about" component={About} />
