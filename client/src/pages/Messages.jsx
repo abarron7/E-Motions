@@ -121,22 +121,6 @@ export default withAuth(class Saved extends Component {
             }
             {!this.state.authenticated &&
               <div>
-                <p>If you&lsquo;re viewing this page then you have successfully started this React application.</p>
-                <p>
-                  <span>This example shows you how to use the </span>
-                  <a href="https://github.com/okta/okta-oidc-js/tree/master/packages/okta-react">Okta React Library</a>
-                  <span> and the </span>
-                  <a href="https://github.com/okta/okta-signin-widget">Okta Sign-In Widget</a>
-                  <span> to add the </span>
-                  <a href="https://developer.okta.com/authentication-guide/implementing-authentication/implicit">Implicit Flow</a>
-                  <span> to your application. This combination is useful when you want to leverage the features of the Sign-In Widget, </span>
-                  <span> and the authentication helper components from the <code>okta-react</code> module.</span>
-                </p>
-                <p>
-                  Once you have logged in you will be redirected through your authorization server (the issuer defined in config) to create a session for Single-Sign-On (SSO).
-                  After this you will be redirected back to the application with an ID token and access token.
-                  The tokens will be stored in local storage for future use.
-                </p>
                 <Button id="login-button" primary onClick={this.login}>Login</Button>
               </div>
             }
