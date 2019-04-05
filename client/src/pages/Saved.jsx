@@ -42,6 +42,7 @@ export default withAuth(class Saved extends Component {
       ready: false,
       // local meme storage from db
       allMemesFromDB: [],
+      haveSearchedForSaved: false,
       currentMeme: {
         index: null,
         url: null,
@@ -98,7 +99,8 @@ export default withAuth(class Saved extends Component {
       .then(res => {
         this.setState({
           allMemesFromDB: res.data,
-          haveScraped: true
+          haveScraped: true,
+          haveSearchedForSaved: true,
         });
         console.log(this.state.allMemesFromDB);
       })
@@ -275,14 +277,22 @@ export default withAuth(class Saved extends Component {
                       </div>
                     </React.Fragment>
                   }
-                  {this.returnSavedMemes().length == 0 &&
+                  {!this.state.haveSearchedForSaved &&
                     <React.Fragment>
                       <div className="page-text">
-                        <p>Unless they're still loading, it looks like you haven't liked any memes yet...</p>
+                        <p>Hang tight, wholesome memes are loading!</p>
+                      </div>
+                    </React.Fragment>
+                  }
+                  {this.state.haveSearchedForSaved && this.returnSavedMemes().length == 0 &&
+                    <React.Fragment>
+                      <div className="page-text">
+                        <p>It looks like you haven't liked any memes yet...</p>
                         <p>Feel free to start browsing and saving memes by clicking <a href="/memes">here</a>.</p>
                       </div>
                     </React.Fragment>
                   }
+
 {/* 
                   <p>Current meme is {this.state.currentMeme.index}</p>
                 

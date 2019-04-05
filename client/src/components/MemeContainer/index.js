@@ -14,7 +14,8 @@ export default class MemeContainer extends Component {
   }
 
   handleMemeShareChain = (dataFromChild) => {
-    alert("This is the Share button");
+    // alert("This is the Share button");
+    this.props.handleMemeShare();
   }
   
   handleMemeLikeChain = () => {
@@ -53,6 +54,7 @@ export default class MemeContainer extends Component {
           handleMemeDislike={this.handleMemeDislikeChain}
           handleMemeShare={this.handleMemeShareChain}
           handleMemeLike={this.handleMemeLikeChain}
+          src={this.props.src}
         ></MemeNav>
       </div>
     );
