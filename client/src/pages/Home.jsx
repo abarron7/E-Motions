@@ -71,9 +71,6 @@ export default withAuth(
               )}
               {!this.state.authenticated && (
                 <div className="login-button">
-                  <Button id="login-button" primary onClick={this.login}>
-                    Login
-                  </Button>
                 </div>
               )}
             </div>
