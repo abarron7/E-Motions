@@ -159,7 +159,7 @@ li>a:only-child:after {
 
     nav a:hover,
     nav ul ul ul a {
-        background-color: #000000 !important;
+        background-color: rgb(255,255,255, 0.2) !important;
     }
 
     nav ul li ul li .toggle,
@@ -173,7 +173,7 @@ li>a:only-child:after {
 
     nav ul li ul li .toggle,
     nav ul ul a {
-        background-color: #212121 !important;
+        background-color: rgb(255,255,255, 0.6) !important;
     }
 
     nav ul ul {

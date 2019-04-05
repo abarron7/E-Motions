@@ -25,3 +25,12 @@
         height: 100% !important;
     }
 }
+
+@media all and (max-width : 468px) {
+    .ui.text.container {
+        margin-left: 1px!important;
+        margin-right: 1px!important;
+        padding-left: 1px!important;
+        padding-right: 1px!important;
+    }
+}
