@@ -18,3 +18,7 @@
 
     cursor: pointer;
 }
+
+.fb-share-button {
+    display: inline-block;
+}
