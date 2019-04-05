@@ -17,6 +17,7 @@
     color: white;
 
     margin: 10px;
+}
 
 @media all and (max-width : 468px) {
     .miniMemeImage {
