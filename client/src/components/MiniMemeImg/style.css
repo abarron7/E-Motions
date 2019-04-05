@@ -3,6 +3,7 @@
     height: auto;    
 } */
 
+
 .miniMemeImage {
     border-style: solid;
     border-color: white;
@@ -16,4 +17,12 @@
     color: white;
 
     margin: 10px;
+
+@media all and (max-width : 468px) {
+    .miniMemeImage {
+        margin-left: 1px!important;
+        margin-right: 1px!important;
+        padding-left: 1px!important;
+        padding-right: 1px!important;
+    }
 }
