@@ -245,7 +245,14 @@ export default withAuth(class Memes extends Component {
                     >
                     </MemeContainer>
                   }
-                  {this.returnNewMemes().length == 0 &&
+                  {!this.state.haveScraped &&
+                    <React.Fragment>
+                      <div className="page-text">
+                        <p>Hang tight, wholesome memes are loading!</p>
+                      </div>
+                    </React.Fragment>
+                  }
+                  {this.state.haveScraped && this.returnNewMemes().length == 0 &&
                     <React.Fragment>
                       <div className="page-text">
                         <p>Wow, you've reviewed all the memes we have for now...</p>

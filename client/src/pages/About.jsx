@@ -82,7 +82,7 @@ export default withAuth(
               {this.state.authenticated && (
                 <div className="page-text">
                   <Header as="h1">The Project</Header>
-                  <ul>From a coding perspective, E-Motions has the following:
+                  <ul>From a coding perspective, this site uses:
                       <li>
                         MERN stack: This site utilizes the MERN stack (MongoDB, Express, React, Node.js) to build
                         an incredibly fast and responsive website.
