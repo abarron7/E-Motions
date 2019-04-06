@@ -149,9 +149,9 @@ app.get('/secure', authenticationRequired, (req, res) => {
 });
 
 // Serve up single-page app React
-app.get('/', function(req, res) {
-  res.json(path.join(__dirname, "./client/src/pages/Home.jsx"));
-});
+// app.get('/', function(req, res) {
+//   res.json(path.join(__dirname, "./client/src/pages/Home.jsx"));
+// });
 
 // Add routes, includes both React and API
 app.use(routes);
