@@ -23,7 +23,6 @@ import "./CommonCSS.css";
 import "./Saved.css";
 
 // audio player
-import soundFile from '../assets/audio/wow.mp3';
 // var $ = require('jquery');
 
 
@@ -245,7 +244,6 @@ export default withAuth(class Saved extends Component {
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
             {this.state.authenticated &&(
               <div>
-                <audio src={soundFile} autoPlay />
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.allMemesFromDB.length}</p> */}
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}

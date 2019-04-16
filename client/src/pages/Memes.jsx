@@ -20,7 +20,6 @@ import API from "../utils/API";
 
 // Import page specific CSS
 // audio 
-import soundFile from '../assets/audio/wow.mp3';
 import "./CommonCSS.css";
 import "./Memes.css";
 // var $ = require('jquery');
@@ -229,7 +228,6 @@ export default withAuth(class Memes extends Component {
             {/* <Header as="h1">Custom Login Page with Sign In Widget</Header> */}
             {this.state.authenticated &&(
               <div>
-                <audio src={soundFile} autoPlay />
                 {/* <button onClick={() => this.scrapeMemes()}>Click Me</button> */}
                 {/* <p>Length is {this.state.allMemesFromDB.length}</p> */}
                 {/* <p>Current meme is {this.state.currentMeme.index}</p> */}
