@@ -47,6 +47,11 @@ export default withAuth(
               </article> */}
           
               <Header as="h1">E-Motions: A Wholesome Memes Project</Header>
+              <p>If you don't want sign in to your personal account or don't want to sign up, thats okay!
+                Feel free to use a guest account:
+                User: guest@emotions.com
+                Password: Password1
+              </p>
               {this.state.authenticated && (
                 <div className="page-text">
                   <p>Welcome back, {this.state.userinfo.name}!</p>
